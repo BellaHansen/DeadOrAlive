@@ -26,7 +26,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject menuLose;
 
     //Variable for player HP bar
-    [SerializeField] Image playerHPBar;
+    public Image playerHPBar;
 
     //Variable for damage flahs screen
     public GameObject damageFlashScreen;
