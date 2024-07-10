@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour, IDamage
     // Start is called before the first frame update
     void Start()
     {
-
+        HPOrig = HP;
     }
 
     // Update is called once per frame
@@ -107,6 +107,14 @@ public class PlayerController : MonoBehaviour, IDamage
 
         yield return new WaitForSeconds(shootRate);
         isShooting = false;
+    }
+
+    void HealPlayer(Collider other)
+    {
+        if(other.CompareTag("Player"))
+        {
+            HP = HPOrig;
+        }
     }
 
     public void TakeDamage(int amount)
