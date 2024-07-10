@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Add using UnityEngine.UI
+using UnityEngine.UI;
+
+//Add using TMPro
+using TMPro;
+
 public class gameManager : MonoBehaviour
 {
     //create a public static class instance
@@ -19,8 +25,32 @@ public class gameManager : MonoBehaviour
     //Variable for lose menu
     [SerializeField] GameObject menuLose;
 
+    //Variable for player HP bar
+    [SerializeField] Image playerHPBar;
+
+    //Variable for damage flahs screen
+    public GameObject damageFlashScreen;
+
+    //Variable for the text zombie count
+    [SerializeField] TMP_Text zombieCountText;
+
+    //Variable for wave count text
+    [SerializeField] TMP_Text waveCountText;
+
+    //Variable for player
+    public GameObject player;
+
+    //Variable for player script
+    //public playerController playerScript;
+
     //bool to check if the game is paused
     public bool isPaused;
+
+    //Variable for zombie count
+    int zombieCount;
+
+    //Variable for wave count
+    int waveCount;
 
 
 
@@ -31,6 +61,12 @@ public class gameManager : MonoBehaviour
     {
         //Define instance
         instance = this;
+
+        //Define player
+        player = GameObject.FindWithTag("Player");
+
+        //Define player script
+        //playerScript = player.GetComponent<playerController>();
     }
 
     // Update is called once per frame
@@ -62,7 +98,7 @@ public class gameManager : MonoBehaviour
     //Function to pause
     public void statePause()
     {
-        //Taggle isPaused bool
+        //Toggle isPaused bool
         isPaused = !isPaused;
 
         //Stop everything from moving except UI
@@ -78,10 +114,10 @@ public class gameManager : MonoBehaviour
     //Function to unpause the game
     public void stateUnpause()
     {
-        //Taggle the isPaused bool
+        //Toggle the isPaused bool
         isPaused = !isPaused;
 
-        Time .timeScale = 1;
+        Time.timeScale = 1;
 
         //Turn off the cursor
         Cursor.visible = false;
@@ -94,5 +130,44 @@ public class gameManager : MonoBehaviour
 
         //Set menu active to null
         menuActive = null;
+    }
+
+    //Create a function to update the game goal
+    public void updateGameGoal(int amount)
+    {
+        zombieCount += amount;
+
+        waveCount += amount;
+
+        zombieCountText.text = zombieCount.ToString("F0");
+
+        waveCountText.text = waveCount.ToString("F0");
+            
+
+        if(zombieCount <= 0)
+        {
+            //Player wins
+            //pause the game
+            statePause();
+
+            //Set menu active to menu win
+            menuActive = menuWin;
+
+            //Toggle menu active
+            menuActive.SetActive(isPaused);
+        }
+    } 
+
+    //Create a function to lose 
+    public void youLose()
+    {
+        //Pause the game 
+        statePause();
+
+        //Set the menu active to menu lose
+        menuActive = menuLose;
+
+        //Toggle menu active
+        menuActive.SetActive(true);
     }
 }
