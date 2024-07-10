@@ -41,7 +41,7 @@ public class gameManager : MonoBehaviour
     public GameObject player;
 
     //Variable for player script
-    //public playerController playerScript;
+    public PlayerController playerScript;
 
     //bool to check if the game is paused
     public bool isPaused;
@@ -66,7 +66,7 @@ public class gameManager : MonoBehaviour
         player = GameObject.FindWithTag("Player");
 
         //Define player script
-        //playerScript = player.GetComponent<playerController>();
+        playerScript = player.GetComponent<PlayerController>();
     }
 
     // Update is called once per frame

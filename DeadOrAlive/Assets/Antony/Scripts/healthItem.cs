@@ -22,7 +22,7 @@ public class healthItem : MonoBehaviour
             if (player != null)
             {
                 //Call takeDamage on the  player to heal
-                player.takeDamage(healthVal - healthVal);
+                player.TakeDamage(healthVal - healthVal);
             }
 
             //Destroy the health item after it has been collected
