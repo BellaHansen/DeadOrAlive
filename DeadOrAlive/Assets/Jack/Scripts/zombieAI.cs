@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,15 +13,19 @@ public class zombieAI : MonoBehaviour
     [SerializeField] int HP;
     [SerializeField] int faceTargetSpeed;
     [SerializeField] GameObject target;
+    [SerializeField] Animator animator;
 
     Vector3 targetDir;
+    float origSpeed;
 
     bool isBeingDamaged;
 
     void Start()
     {
-        isBeingDamaged = false;
         model.material.EnableKeyword("_EMISSION");
+        animator = GetComponent<Animator>();
+        isBeingDamaged = false;
+        origSpeed = agent.speed;
     }
 
     void Update()
@@ -28,15 +33,27 @@ public class zombieAI : MonoBehaviour
         targetDir = target.transform.position - transform.position;
         agent.SetDestination(target.transform.position);
 
-        if (agent.remainingDistance <= agent.stoppingDistance)
+        if (agent.remainingDistance <= agent.stoppingDistance && agent.remainingDistance >  0 && animator.GetBool("Attacking") == false)
+        {
+            StartCoroutine(attack());
+        }
+        if (animator.GetBool("Attacking") == true)
         {
             faceTarget();
-        }
+        }    
 
-        if (!isBeingDamaged)
+        if (isBeingDamaged)
         {
             StartCoroutine(flashDamage());
-        }
+        }   
+    }
+    IEnumerator attack()
+    {
+        animator.SetBool("Attacking", true);
+        agent.speed = 0;
+        yield return new WaitForSeconds(1);
+        agent.speed = origSpeed;
+        animator.SetBool("Attacking", false);
     }
     void faceTarget()
     {
@@ -47,9 +64,8 @@ public class zombieAI : MonoBehaviour
     {
         isBeingDamaged = true;
         model.material.SetColor("_EmissionColor", damageColor);
-        yield return new WaitForSeconds(1f);
-        model.material.SetColor("_EmissionColor)", Color.black);
+        yield return new WaitForSeconds(1);
+        model.material.SetColor("_EmissionColor", Color.black);
         isBeingDamaged = false;
-        yield return new WaitForSeconds(1f);
     }
 }
