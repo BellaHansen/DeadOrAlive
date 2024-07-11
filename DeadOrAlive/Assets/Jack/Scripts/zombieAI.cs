@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class zombieAI : MonoBehaviour
+public class zombieAI : MonoBehaviour, IDamage
 {
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Renderer model;
@@ -26,6 +26,8 @@ public class zombieAI : MonoBehaviour
         animator = GetComponent<Animator>();
         isBeingDamaged = false;
         origSpeed = agent.speed;
+        target = GameObject.FindWithTag("Player");
+        gameManager.instance.updateGameGoal(1);
     }
 
     void Update()
@@ -67,5 +69,10 @@ public class zombieAI : MonoBehaviour
         yield return new WaitForSeconds(1);
         model.material.SetColor("_EmissionColor", Color.black);
         isBeingDamaged = false;
+    }
+
+    public void TakeDamage(int Amount)
+    {
+        HP -= Amount;
     }
 }
