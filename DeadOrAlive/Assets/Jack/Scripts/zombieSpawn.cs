@@ -40,6 +40,5 @@ public class zombieSpawn : MonoBehaviour
         spawnCount += spawnIncrease;
         yield return new WaitForSeconds(spawnDelay);
         isWaiting = false;
-        //
     }
 }

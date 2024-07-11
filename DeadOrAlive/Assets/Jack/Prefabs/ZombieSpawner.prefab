@@ -47,4 +47,4 @@ MonoBehaviour:
   spawnCount: 2
   spawnDelay: 10
   spawnIncrease: 2
-  zombie: {fileID: 1302965377835665273, guid: 9c9f1107007c5f548b87daa602f6ad70, type: 3}
+  zombie: {fileID: 2438780825584079459, guid: 9c9f1107007c5f548b87daa602f6ad70, type: 3}

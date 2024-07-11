@@ -14,6 +14,10 @@ public class zombieAI : MonoBehaviour, IDamage
     [SerializeField] int faceTargetSpeed;
     [SerializeField] GameObject target;
     [SerializeField] Animator animator;
+    [SerializeField] int damage;
+    [SerializeField] GameObject attackPoint;
+    [SerializeField] float attackDist;
+    [SerializeField] LayerMask ignoreMask;
 
     Vector3 targetDir;
     float origSpeed;
@@ -26,7 +30,7 @@ public class zombieAI : MonoBehaviour, IDamage
         animator = GetComponent<Animator>();
         isBeingDamaged = false;
         origSpeed = agent.speed;
-        target = GameObject.FindWithTag("Player");
+        target = gameManager.instance.player;
         gameManager.instance.updateGameGoal(1);
     }
 
@@ -42,18 +46,23 @@ public class zombieAI : MonoBehaviour, IDamage
         if (animator.GetBool("Attacking") == true)
         {
             faceTarget();
-        }    
-
-        if (isBeingDamaged)
-        {
-            StartCoroutine(flashDamage());
-        }   
+        }     
     }
     IEnumerator attack()
     {
         animator.SetBool("Attacking", true);
         agent.speed = 0;
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.4f);
+        RaycastHit hit;
+        if (Physics.Raycast(attackPoint.transform.position, attackPoint.transform.forward, out hit, attackDist, ~ignoreMask))
+        {
+            IDamage dmg = hit.collider.GetComponent<IDamage>();
+
+            if (hit.transform != transform && dmg != null)
+            {
+                dmg.TakeDamage(damage);
+            }
+        }
         agent.speed = origSpeed;
         animator.SetBool("Attacking", false);
     }
@@ -66,7 +75,7 @@ public class zombieAI : MonoBehaviour, IDamage
     {
         isBeingDamaged = true;
         model.material.SetColor("_EmissionColor", damageColor);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.1f);
         model.material.SetColor("_EmissionColor", Color.black);
         isBeingDamaged = false;
     }
@@ -74,5 +83,14 @@ public class zombieAI : MonoBehaviour, IDamage
     public void TakeDamage(int Amount)
     {
         HP -= Amount;
+        if (!isBeingDamaged)
+        {
+            StartCoroutine(flashDamage());
+        }
+        if (HP <= 0) 
+        {
+            gameManager.instance.updateGameGoal(-1);
+            Destroy(gameObject);
+        }
     }
 }
