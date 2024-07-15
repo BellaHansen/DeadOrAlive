@@ -342,13 +342,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   bullet: {fileID: 3255173799177879351}
-  HP: 120
+  HP: 10
   speed: 8
   sprintMod: 2
   jumpsMax: 1
   jumpSpeed: 8
   gravity: 22
-  shootDamage: 48
+  shootDamage: 1
   shootRate: 0.06
   shootDist: 300
   regenMod: 0

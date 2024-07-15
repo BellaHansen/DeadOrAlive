@@ -23,6 +23,7 @@ public class zombieAI : MonoBehaviour, IDamage
     float origSpeed;
 
     bool isBeingDamaged;
+    public zombieSpawn whereISpawned;
 
     void Start()
     {
@@ -90,6 +91,12 @@ public class zombieAI : MonoBehaviour, IDamage
         if (HP <= 0) 
         {
             gameManager.instance.updateGameGoal(-1);
+
+            if (whereISpawned)
+            {
+                whereISpawned.updateEnemyNumber();
+            }
+
             Destroy(gameObject);
         }
     }

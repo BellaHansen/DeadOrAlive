@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4413731351689318487
+--- !u!1 &9210850983263745228
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,43 +8,43 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7116861501565267656}
-  - component: {fileID: 883096405925980855}
+  - component: {fileID: 4973643001741704591}
+  - component: {fileID: 430902687091610514}
   m_Layer: 0
-  m_Name: ZombieSpawner
+  m_Name: Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7116861501565267656
+--- !u!4 &4973643001741704591
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4413731351689318487}
+  m_GameObject: {fileID: 9210850983263745228}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -60.47, y: 0, z: -13.95}
+  m_LocalPosition: {x: 60.88913, y: -91.93115, z: -6.228031}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &883096405925980855
+--- !u!114 &430902687091610514
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4413731351689318487}
+  m_GameObject: {fileID: 9210850983263745228}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fcb94dd19cf649044af59bfcfaab6ba8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnCount: 2
-  spawnDelay: 10
-  spawnIncrease: 2
-  zombie: {fileID: 2438780825584079459, guid: 9c9f1107007c5f548b87daa602f6ad70, type: 3}
+  thingToSpawn: {fileID: 2438780825584079459, guid: 9c9f1107007c5f548b87daa602f6ad70, type: 3}
+  numToSpawn: 0
+  spawnTimer: 0
+  spawnPos: []

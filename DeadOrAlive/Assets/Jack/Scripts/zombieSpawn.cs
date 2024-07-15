@@ -4,41 +4,57 @@ using UnityEngine;
 
 public class zombieSpawn : MonoBehaviour
 {
-    [SerializeField] int spawnCount;
-    [SerializeField] float spawnDelay;
-    [SerializeField] int spawnIncrease;
-    [SerializeField] GameObject zombie;
+    [SerializeField] GameObject thingToSpawn;
+    [SerializeField] int numToSpawn;
+    [SerializeField] int spawnTimer;
+    [SerializeField] Transform[] spawnPos;
 
-    bool isWaiting;
+    int spawnCount;
+    bool isSpawning;
+    bool startSpawning;
+    int numKilled;
 
-    Vector3 spawnPosition;
-    Quaternion spawnRotation;
-
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        isWaiting = false;
-        spawnPosition = transform.position;
-        spawnRotation = transform.rotation;
+        
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (!isWaiting)
+        if (startSpawning && !isSpawning && spawnCount < numToSpawn)
         {
-            StartCoroutine(spawnWave());
+            StartCoroutine(spawn());
         }
     }
-    IEnumerator spawnWave()
+
+    public void startWave()
     {
-        isWaiting = true;
-        for (int i = 0; i < spawnCount; i++)
+        startSpawning = true;
+        gameManager.instance.updateGameGoal(numToSpawn);
+    }
+
+    IEnumerator spawn()
+    {
+        isSpawning = true;
+        int arrayPos = Random.Range(0, spawnPos.Length);
+        GameObject objectSpawned = Instantiate(thingToSpawn, spawnPos[arrayPos].position, spawnPos[arrayPos].rotation);
+        
+        if (objectSpawned.GetComponent<zombieAI>())
         {
-            Instantiate(zombie, spawnPosition, spawnRotation);
+            objectSpawned.GetComponent<zombieAI>().whereISpawned = this;
         }
-        spawnCount += spawnIncrease;
-        yield return new WaitForSeconds(spawnDelay);
-        isWaiting = false;
+
+        spawnCount++;
+        yield return new WaitForSeconds(spawnTimer);
+    }
+
+    public void updateEnemyNumber()
+    {
+        numKilled++;
+
+        if (numKilled >= numToSpawn)
+        {
+            startSpawning = false;
+        }
     }
 }
