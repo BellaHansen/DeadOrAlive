@@ -36,7 +36,7 @@ public class waveManager : MonoBehaviour
         {
             yield return new WaitForSeconds(timeBetweenWaves);
 
-            //spawners[currentWave - 1].startWave();
+            spawners[currentWave - 1].startWave();
         }
     }
 }

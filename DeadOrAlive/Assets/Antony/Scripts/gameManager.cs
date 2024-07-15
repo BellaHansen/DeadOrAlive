@@ -135,11 +135,17 @@ public class gameManager : MonoBehaviour
     //Create a function to update the game goal
     public void updateGameGoal(int amount)
     {
+        //update zombie count
         zombieCount += amount;
 
-        zombieCountText.text = zombieCount.ToString("F0");   
+        //update zombie count display
+        zombieCountText.text = zombieCount.ToString("F0");
 
-        if(zombieCount <= 0 && waveManager.instance.currentWave >= waveManager.instance.spawners.Length)
+        //update wave count display
+        waveCountText.text = waveManager.instance.currentWave.ToString("F0");
+
+
+        if (zombieCount <= 0 && waveManager.instance.currentWave >= waveManager.instance.spawners.Length)
         {
             //Player wins
             //pause the game
