@@ -137,14 +137,9 @@ public class gameManager : MonoBehaviour
     {
         zombieCount += amount;
 
-        waveCount += amount;
+        zombieCountText.text = zombieCount.ToString("F0");   
 
-        zombieCountText.text = zombieCount.ToString("F0");
-
-        waveCountText.text = waveCount.ToString("F0");
-            
-
-        if(zombieCount <= 0)
+        if(zombieCount <= 0 && waveManager.instance.currentWave >= waveManager.instance.spawners.Length)
         {
             //Player wins
             //pause the game
