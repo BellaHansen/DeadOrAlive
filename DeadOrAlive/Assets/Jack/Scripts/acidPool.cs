@@ -1,0 +1,57 @@
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+
+public class acidPool : MonoBehaviour
+{
+    [SerializeField] int damageAmount;
+    [SerializeField] float timeBetweenDamage;
+    [SerializeField] float lingerTime;
+
+    IDamage dmg;
+    bool playerInPool;
+    bool damage;
+    // Start is called before the first frame update
+    void Start()
+    {
+        StartCoroutine(DeleteAfterTime());
+    }
+    private void Update()
+    {
+        if (playerInPool && !damage)
+        {
+            new WaitForSeconds(timeBetweenDamage);
+            StartCoroutine(DamageAfterTime());
+        }    
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.isTrigger)
+        {
+            return;
+        }
+        playerInPool = true;
+        dmg = other.GetComponent<IDamage>();
+    }
+
+    void OnTriggerExit()
+    {
+        playerInPool = false;
+    }
+    IEnumerator DeleteAfterTime()
+    {
+        yield return new WaitForSeconds(lingerTime);
+        Destroy(gameObject);
+    }
+    IEnumerator DamageAfterTime()
+    {
+        damage = true;
+        if (dmg != null)
+        {
+            dmg.TakeDamage(damageAmount);
+        }
+        yield return new WaitForSeconds(timeBetweenDamage);
+        damage = false;
+    }
+}
