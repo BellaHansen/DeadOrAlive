@@ -25,6 +25,9 @@ public class PlayerController : MonoBehaviour, IDamage
     Vector3 moveDir;
     Vector3 playerVel;
 
+    enum LeanState { None, Left, Right }
+    LeanState CurrentLeanstate;
+
     int jumpCount;
     int HPOrig;
 
@@ -73,6 +76,7 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             StartCoroutine(shoot());
         }
+        LeanMechanics();
     }
 
     void sprint()
@@ -111,7 +115,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     void HealPlayer(Collider other)
     {
-        if(other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
             HP = HPOrig;
         }
@@ -122,8 +126,57 @@ public class PlayerController : MonoBehaviour, IDamage
         HP -= amount;
         if (HP <= 0)
         {
-
+            gameManager.instance.youLose();
         }
     }
 
+    void LeanMechanics()
+    {
+        int tempspeed = speed;
+        IsLeaning();
+        if (CurrentLeanstate == LeanState.Right)
+        {
+            Camera.main.transform.localRotation = Quaternion.Euler(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"), Camera.main.transform.rotation.z - 45);
+        }
+        else if (CurrentLeanstate == LeanState.Left)
+        {
+            Camera.main.transform.localRotation = Quaternion.Euler(Camera.main.transform.rotation.x, 0, Camera.main.transform.rotation.z + 45);
+        }
+    }
+   public void IsLeaning()
+    {
+        if (CurrentLeanstate == LeanState.None)
+        {
+            if (Input.GetButtonUp("leanR"))
+            {
+                CurrentLeanstate = LeanState.Right;
+            }
+            else if(Input.GetButtonUp("leanL"))
+            {
+                CurrentLeanstate = LeanState.Left;
+            }
+        }
+        else if (CurrentLeanstate == LeanState.Right)
+        {
+            if (Input.GetButtonUp("leanR"))
+            {
+                CurrentLeanstate = LeanState.None;
+            }
+            else if (Input.GetButtonUp("leanL"))
+            {
+                CurrentLeanstate = LeanState.Left;
+            }
+        }
+        else if(CurrentLeanstate == LeanState.Left)
+        {
+            if (Input.GetButtonUp("leanR"))
+            {
+                CurrentLeanstate = LeanState.Right;
+            }
+            else if (Input.GetButtonUp("leanL"))
+            {
+                CurrentLeanstate = LeanState.None;
+            }
+        }
+    }
 }
