@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour, IDamage
@@ -9,35 +10,35 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] GameObject bullet;
 
     [SerializeField] int HP;
-    [SerializeField] int speed;
+    [SerializeField] int origSpeed;
     [SerializeField] int sprintMod;
     [SerializeField] int jumpsMax;
     [SerializeField] int jumpSpeed;
     [SerializeField] int gravity;
-
-
     [SerializeField] int shootDamage;
-    [SerializeField] float shootRate;
     [SerializeField] int shootDist;
-    [SerializeField] float regenMod;
 
+    [SerializeField] float shootRate;
+    [SerializeField] float regenMod;
 
     Vector3 moveDir;
     Vector3 playerVel;
 
-    enum LeanState { None, Left, Right }
-    LeanState CurrentLeanstate;
+    public bool leaningRight;
+    public bool leaningLeft;
+    bool isleaning;
+    bool isShooting;
+    bool isRegen;
 
     int jumpCount;
     int HPOrig;
+    int speed;
 
-    bool isShooting;
-
-    bool isRegen;
     // Start is called before the first frame update
     void Start()
     {
         HPOrig = HP;
+        SpawnPlayer();
     }
 
     // Update is called once per frame
@@ -49,9 +50,18 @@ public class PlayerController : MonoBehaviour, IDamage
         sprint();
 
     }
+
+    public void SpawnPlayer()
+    {
+        HP = HPOrig;
+        UpdatePlayerUI();
+        controller.enabled = false;
+        gameManager.instance.playerSpawnPos.transform.position;
+        controller.enabled = true;
+    }
     void movement()
     {
-
+        speed = origSpeed / 2;
         if (controller.isGrounded)
         {
             jumpCount = 0;  // reset jumps to jump again
@@ -60,7 +70,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
         moveDir = Input.GetAxis("Vertical") * transform.forward +
                   Input.GetAxis("Horizontal") * transform.right;
-        controller.Move(moveDir * speed * Time.deltaTime); // time based not frame based
+
 
         if (Input.GetButtonDown("Jump") && jumpCount < jumpsMax)
         {
@@ -83,11 +93,11 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         if (Input.GetButtonDown("Sprint"))
         {
-            speed *= sprintMod;
+            origSpeed *= sprintMod;
         }
         else if (Input.GetButtonUp("Sprint"))
         {
-            speed /= sprintMod;
+            origSpeed /= sprintMod;
         }
     }
 
@@ -113,7 +123,7 @@ public class PlayerController : MonoBehaviour, IDamage
         isShooting = false;
     }
 
-    void HealPlayer(Collider other)
+    public void HealPlayer(Collider other)
     {
         if (other.CompareTag("Player"))
         {
@@ -124,59 +134,56 @@ public class PlayerController : MonoBehaviour, IDamage
     public void TakeDamage(int amount)
     {
         HP -= amount;
+        UpdatePlayerUI();
+        StartCoroutine(FlashDamage());
         if (HP <= 0)
         {
             gameManager.instance.youLose();
         }
     }
 
+    IEnumerator FlashDamage()
+    {
+        gameManager.instance.damageFlashScreen.SetActive(true);
+        yield return new WaitForSeconds(0.05f);
+        gameManager.instance.damageFlashScreen.SetActive(false);
+    }
+
     void LeanMechanics()
     {
-        int tempspeed = speed;
-        IsLeaning();
-        if (CurrentLeanstate == LeanState.Right)
+        if(IsLeaning())
         {
-            Camera.main.transform.localRotation = Quaternion.Euler(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"), Camera.main.transform.rotation.z - 45);
+            controller.Move(moveDir * speed * Time.deltaTime);
         }
-        else if (CurrentLeanstate == LeanState.Left)
+        else
         {
-            Camera.main.transform.localRotation = Quaternion.Euler(Camera.main.transform.rotation.x, 0, Camera.main.transform.rotation.z + 45);
+            controller.Move(moveDir * origSpeed * Time.deltaTime);
         }
+
     }
-   public void IsLeaning()
+    public bool IsLeaning()
     {
-        if (CurrentLeanstate == LeanState.None)
-        {
-            if (Input.GetButtonUp("leanR"))
-            {
-                CurrentLeanstate = LeanState.Right;
-            }
-            else if(Input.GetButtonUp("leanL"))
-            {
-                CurrentLeanstate = LeanState.Left;
-            }
+        if (!isleaning)
+        { 
+            return false;
         }
-        else if (CurrentLeanstate == LeanState.Right)
+
+        if (Input.GetButtonUp("leanL"))
         {
-            if (Input.GetButtonUp("leanR"))
-            {
-                CurrentLeanstate = LeanState.None;
-            }
-            else if (Input.GetButtonUp("leanL"))
-            {
-                CurrentLeanstate = LeanState.Left;
-            }
+            leaningLeft = !leaningLeft;
+            isleaning = true;
         }
-        else if(CurrentLeanstate == LeanState.Left)
+
+        if (Input.GetButtonUp("leanR"))
         {
-            if (Input.GetButtonUp("leanR"))
-            {
-                CurrentLeanstate = LeanState.Right;
-            }
-            else if (Input.GetButtonUp("leanL"))
-            {
-                CurrentLeanstate = LeanState.None;
-            }
+            leaningRight = !leaningRight;
+            isleaning = true;
         }
+
+        return isleaning;
+    }
+    public void UpdatePlayerUI()
+    {
+        gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
     }
 }
