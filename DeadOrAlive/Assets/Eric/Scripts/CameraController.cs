@@ -9,6 +9,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] int lockvertmin, lockvertmax;
     [SerializeField] bool invertY;
 
+    GameObject player;
     bool leanleft;
     bool leanright;
     float rotX;
@@ -19,7 +20,6 @@ public class CameraController : MonoBehaviour
         //removal of cursor code
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-
     }
 
     // Update is called once per frame

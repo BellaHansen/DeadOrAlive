@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class zombieAI : MonoBehaviour, IDamage
+public class newSpitterAI : MonoBehaviour, IDamage
 {
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Animator anim;
@@ -12,6 +12,7 @@ public class zombieAI : MonoBehaviour, IDamage
     [SerializeField] Color damageColor;
     [SerializeField] Transform attackPos;
     [SerializeField] Transform headPos;
+    [SerializeField] GameObject projectile;
 
     [SerializeField] int HP;
     [SerializeField] int faceTargetSpeed;
@@ -52,14 +53,14 @@ public class zombieAI : MonoBehaviour, IDamage
         anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentSpeed, Time.deltaTime * animSpeed));
         if (playerInRange && !canSeePlayer())
         {
-            if (!isRoaming && agent.remainingDistance < 0.05f)
+            if (!isRoaming && agent.remainingDistance < 0.6f)
             {
                 StartCoroutine(roam());
             }
         }
         else if (!playerInRange)
         {
-            if (!isRoaming && agent.remainingDistance < 0.05f)
+            if (!isRoaming && agent.remainingDistance < 0.6f)
             {
                 StartCoroutine(roam());
             }
@@ -70,7 +71,7 @@ public class zombieAI : MonoBehaviour, IDamage
         isRoaming = true;
         yield return new WaitForSeconds(roamTimer);
 
-        agent.stoppingDistance = 0.1f;
+        agent.stoppingDistance = 0.5f;
         Vector3 randomPos = Random.insideUnitSphere * roamDist;
         randomPos += startingPos;
 
@@ -105,7 +106,7 @@ public class zombieAI : MonoBehaviour, IDamage
                 return true;
             }
         }
-        agent.stoppingDistance = 0;
+        agent.stoppingDistance = 0.5f;
         return false;
     }
     void OnTriggerEnter(Collider other)
@@ -121,7 +122,7 @@ public class zombieAI : MonoBehaviour, IDamage
         if (other.CompareTag("Player"))
         {
             playerInRange = false;
-            agent.stoppingDistance = 0;
+            agent.stoppingDistance = 0.5f;
         }
     }
     void faceTarget()
@@ -133,9 +134,8 @@ public class zombieAI : MonoBehaviour, IDamage
     {
         isAttacking = true;
         agent.speed = 0;
-        anim.SetTrigger("Attack");
-
-        yield return new WaitForSeconds(attackRate);
+        Instantiate(projectile, attackPos.transform.position, attackPos.transform.rotation);
+        yield return new WaitForSeconds(1.5f);
         agent.speed = speedOrig;
         isAttacking = false;
     }
