@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+version https://git-lfs.github.com/spec/v1
+oid sha256:b98dce6fa4b6e8ce81e91fd46b50aeb8355f705c5263e86b3ff20e4b2012841b
+size 125503
+=======
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!29 &1
@@ -3609,3 +3614,7 @@ SceneRoots:
   - {fileID: 1994499451}
   - {fileID: 987510655}
   - {fileID: 1672744387}
+<<<<<<< Updated upstream
+=======
+>>>>>>> ea84805c6adeaeaa949453253d73455198d109f7
+>>>>>>> Stashed changes
