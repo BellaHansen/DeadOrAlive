@@ -267,7 +267,7 @@ MonoBehaviour:
   speed: 11
   destroyTime: 5
   acidPool: {fileID: 7503547527830830783, guid: 3f122fe41d48518489c29dbac72f0fcd, type: 3}
-  spitterPrefab: {fileID: 5052536435186923517, guid: fe67f066efeaf4046b050e93dd5abc9d, type: 3}
+  spitterPrefab: {fileID: 1914973568637426990, guid: fe67f066efeaf4046b050e93dd5abc9d, type: 3}
 --- !u!135 &1640941322425862904
 SphereCollider:
   m_ObjectHideFlags: 0

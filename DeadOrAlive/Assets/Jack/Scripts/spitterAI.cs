@@ -81,7 +81,7 @@ public class spitterAI : MonoBehaviour, IDamage
         }
         if (HP <= 0) 
         {
-            gameManager.instance.updateGameGoal(-1);
+            //gameManager.instance.updateGameGoal(-1);
 
             if (whereISpawned)
             {

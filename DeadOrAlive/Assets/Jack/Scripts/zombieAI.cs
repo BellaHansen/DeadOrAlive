@@ -7,96 +7,154 @@ using UnityEngine.AI;
 public class zombieAI : MonoBehaviour, IDamage
 {
     [SerializeField] NavMeshAgent agent;
+    [SerializeField] Animator anim;
     [SerializeField] Renderer model;
     [SerializeField] Color damageColor;
+    [SerializeField] Transform attackPos;
+    [SerializeField] Transform headPos;
 
     [SerializeField] int HP;
     [SerializeField] int faceTargetSpeed;
-    [SerializeField] GameObject target;
-    [SerializeField] Animator animator;
-    [SerializeField] int damage;
-    [SerializeField] GameObject attackPoint;
-    [SerializeField] float attackDist;
-    [SerializeField] LayerMask ignoreMask;
+    [SerializeField] int animSpeed;
+    [SerializeField] int viewAngle;
+    [SerializeField] int roamDist;
+    [SerializeField] int roamTimer;
 
-    Vector3 targetDir;
-    float origSpeed;
+    [SerializeField] int attackRate;
 
-    bool isBeingDamaged;
+    Color colorOrig;
+
+    bool isAttacking;
+    bool playerInRange;
+    bool isRoaming;
+
+    float angleToPlayer;
+    float stoppingDistOrig;
+    float speedOrig;
+
+    Vector3 playerDir;
+    Vector3 startingPos;
+
     public zombieSpawn whereISpawned;
 
     void Start()
     {
-        model.material.EnableKeyword("_EMISSION");
-        animator = GetComponent<Animator>();
-        isBeingDamaged = false;
-        origSpeed = agent.speed;
-        target = gameManager.instance.player;
+        colorOrig = model.material.color;
+        startingPos = transform.position;
+        stoppingDistOrig = agent.stoppingDistance;
+        speedOrig = agent.speed;
         gameManager.instance.updateGameGoal(1);
     }
 
     void Update()
     {
-        targetDir = target.transform.position - transform.position;
-        agent.SetDestination(target.transform.position);
-
-        if (agent.remainingDistance <= agent.stoppingDistance && agent.remainingDistance >  0 && animator.GetBool("Attacking") == false)
+        float agentSpeed = agent.velocity.normalized.magnitude;
+        anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentSpeed, Time.deltaTime * animSpeed));
+        if (playerInRange && !canSeePlayer())
         {
-            StartCoroutine(attack());
-        }
-        if (animator.GetBool("Attacking") == true)
-        {
-            faceTarget();
-        }     
-    }
-    IEnumerator attack()
-    {
-        animator.SetBool("Attacking", true);
-        agent.speed = 0;
-        yield return new WaitForSeconds(0.4f);
-        RaycastHit hit;
-        if (Physics.Raycast(attackPoint.transform.position, attackPoint.transform.forward, out hit, attackDist, ~ignoreMask))
-        {
-            IDamage dmg = hit.collider.GetComponent<IDamage>();
-
-            if (hit.transform != transform && dmg != null)
+            if (!isRoaming && agent.remainingDistance < 0.05f)
             {
-                dmg.TakeDamage(damage);
+                StartCoroutine(roam());
             }
         }
-        agent.speed = origSpeed;
-        animator.SetBool("Attacking", false);
+        else if (!playerInRange)
+        {
+            if (!isRoaming && agent.remainingDistance < 0.05f)
+            {
+                StartCoroutine(roam());
+            }
+        }
+    }
+    IEnumerator roam()
+    {
+        isRoaming = true;
+        yield return new WaitForSeconds(roamTimer);
+
+        agent.stoppingDistance = 0.1f;
+        Vector3 randomPos = Random.insideUnitSphere * roamDist;
+        randomPos += startingPos;
+
+        NavMeshHit hit;
+        NavMesh.SamplePosition(randomPos, out hit, roamDist, 1);
+        agent.SetDestination(hit.position);
+
+        isRoaming = false;
+    }
+    bool canSeePlayer()
+    {
+        playerDir = gameManager.instance.player.transform.position - headPos.position;
+        angleToPlayer = Vector3.Angle(playerDir, transform.forward);
+
+        RaycastHit hit;
+        if (Physics.Raycast(headPos.position, playerDir, out hit))
+        {
+            if (hit.collider.CompareTag("Player") && angleToPlayer <= viewAngle)
+            {
+                agent.SetDestination(gameManager.instance.player.transform.position);
+
+                if (agent.remainingDistance <= agent.stoppingDistance)
+                {
+                    faceTarget();
+                }
+                if (agent.remainingDistance <= agent.stoppingDistance && !isAttacking && agent.remainingDistance > 0)
+                {
+                    StartCoroutine(attack());
+                }
+
+                agent.stoppingDistance = stoppingDistOrig;
+                return true;
+            }
+        }
+        agent.stoppingDistance = 0;
+        return false;
+    }
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = true;
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = false;
+            agent.stoppingDistance = 0;
+        }
     }
     void faceTarget()
     {
-        Quaternion rot = Quaternion.LookRotation(targetDir);
+        Quaternion rot = Quaternion.LookRotation(playerDir);
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
+    }
+    IEnumerator attack()
+    {
+        isAttacking = true;
+        agent.speed = 0;
+        anim.SetTrigger("Attack");
+
+        yield return new WaitForSeconds(attackRate);
+        agent.speed = speedOrig;
+        isAttacking = false;
     }
     IEnumerator flashDamage()
     {
-        isBeingDamaged = true;
-        model.material.SetColor("_EmissionColor", damageColor);
+        model.material.color = damageColor;
         yield return new WaitForSeconds(0.1f);
-        model.material.SetColor("_EmissionColor", Color.black);
-        isBeingDamaged = false;
+        model.material.color = colorOrig;
     }
 
-    public void TakeDamage(int Amount)
+    public void TakeDamage(int amount)
     {
-        HP -= Amount;
-        if (!isBeingDamaged)
-        {
-            StartCoroutine(flashDamage());
-        }
-        if (HP <= 0) 
+        HP -= amount;
+        agent.SetDestination(gameManager.instance.player.transform.position);
+        StartCoroutine(flashDamage());
+
+        if (HP <= 0)
         {
             gameManager.instance.updateGameGoal(-1);
-
-            if (whereISpawned)
-            {
-                whereISpawned.updateEnemyNumber();
-            }
-
             Destroy(gameObject);
         }
     }
