@@ -23,7 +23,7 @@ public class damage : MonoBehaviour
         if (type == damageType.bullet)
         {
             float dist = spitterPrefab.GetComponent<NavMeshAgent>().stoppingDistance / Vector3.Distance(rb.position, gameManager.instance.player.transform.position);
-            rb.velocity = transform.forward * speed/dist;
+            rb.velocity = transform.forward * speed / dist;
             Destroy(gameObject, destroyTime);
         }
     }
