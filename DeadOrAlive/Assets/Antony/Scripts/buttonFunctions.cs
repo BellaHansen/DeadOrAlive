@@ -33,4 +33,11 @@ public class buttonFunctions : MonoBehaviour
         Application.Quit();
 #endif
     }
+
+    //Create respawn function
+    public void respawn()
+    {
+        //gameManager.instance.playerScript.spawnPlayer();
+        gameManager.instance.stateUnpause();
+    }
 }

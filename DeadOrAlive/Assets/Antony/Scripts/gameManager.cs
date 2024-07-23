@@ -43,6 +43,12 @@ public class gameManager : MonoBehaviour
     //Variable for player script
     public PlayerController playerScript;
 
+    //Variable for the player spawn position
+    public GameObject playerSpawnPos;
+
+    //Variable for checkpoint 
+    public GameObject checkpointPopup;
+
     //bool to check if the game is paused
     public bool isPaused;
 
@@ -67,6 +73,9 @@ public class gameManager : MonoBehaviour
 
         //Define player script
         playerScript = player.GetComponent<PlayerController>();
+
+        //Define the player spawn position
+        playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
     }
 
     // Update is called once per frame
