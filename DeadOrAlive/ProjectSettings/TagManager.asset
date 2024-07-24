@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Floor
   - Player Spawn Pos
+  - Survivor
   layers:
   - Default
   - TransparentFX
