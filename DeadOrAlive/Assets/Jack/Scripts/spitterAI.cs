@@ -32,7 +32,7 @@ public class spitterAI : MonoBehaviour, IDamage
         isBeingDamaged = false;
         origSpeed = agent.speed;
         target = gameManager.instance.player;
-        gameManager.instance.updateGameGoal(1);
+        //gameManager.instance.updateGameGoal(1);
     }
 
     void Update()

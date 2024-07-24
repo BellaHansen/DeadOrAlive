@@ -10,6 +10,7 @@ public class zombieAI : MonoBehaviour, IDamage
     [SerializeField] Animator anim;
     [SerializeField] Renderer model;
     [SerializeField] Color damageColor;
+    [SerializeField] LayerMask ignoreMask;
     [SerializeField] Transform attackPos;
     [SerializeField] Transform headPos;
 
@@ -19,6 +20,7 @@ public class zombieAI : MonoBehaviour, IDamage
     [SerializeField] int viewAngle;
     [SerializeField] int roamDist;
     [SerializeField] int roamTimer;
+    [SerializeField] int attackDamage;
 
     [SerializeField] int attackRate;
 
@@ -48,6 +50,7 @@ public class zombieAI : MonoBehaviour, IDamage
 
     void Update()
     {
+        Debug.DrawRay(attackPos.transform.position, attackPos.transform.forward * 3, Color.green);
         float agentSpeed = agent.velocity.normalized.magnitude;
         anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentSpeed, Time.deltaTime * animSpeed));
         if (playerInRange && !canSeePlayer())
@@ -134,8 +137,18 @@ public class zombieAI : MonoBehaviour, IDamage
         isAttacking = true;
         agent.speed = 0;
         anim.SetTrigger("Attack");
+        RaycastHit hit;
+        yield return new WaitForSeconds(.5f);
+        if (Physics.Raycast(attackPos.position, attackPos.forward, out hit, 3, ~ignoreMask))
+        {
+            IDamage dmg = hit.collider.GetComponent<IDamage>();
 
-        yield return new WaitForSeconds(attackRate);
+            if (hit.transform != transform && dmg != null)
+            {
+                dmg.TakeDamage(attackDamage);
+            }
+        }
+        yield return new WaitForSeconds(1.5f);
         agent.speed = speedOrig;
         isAttacking = false;
     }
@@ -154,7 +167,7 @@ public class zombieAI : MonoBehaviour, IDamage
 
         if (HP <= 0)
         {
-            gameManager.instance.updateGameGoal(-1);
+            //gameManager.instance.updateGameGoal(-1);
             Destroy(gameObject);
         }
     }

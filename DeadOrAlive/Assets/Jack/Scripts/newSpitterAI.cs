@@ -44,7 +44,7 @@ public class newSpitterAI : MonoBehaviour, IDamage
         startingPos = transform.position;
         stoppingDistOrig = agent.stoppingDistance;
         speedOrig = agent.speed;
-        gameManager.instance.updateGameGoal(1);
+        //gameManager.instance.updateGameGoal(1);
     }
 
     void Update()
@@ -135,7 +135,8 @@ public class newSpitterAI : MonoBehaviour, IDamage
         isAttacking = true;
         agent.speed = 0;
         Instantiate(projectile, attackPos.transform.position, attackPos.transform.rotation);
-        yield return new WaitForSeconds(1.5f);
+        anim.SetTrigger("Attack");
+        yield return new WaitForSeconds(attackRate);
         agent.speed = speedOrig;
         isAttacking = false;
     }
@@ -154,7 +155,7 @@ public class newSpitterAI : MonoBehaviour, IDamage
 
         if (HP <= 0)
         {
-            gameManager.instance.updateGameGoal(-1);
+            //gameManager.instance.updateGameGoal(-1);
             Destroy(gameObject);
         }
     }
