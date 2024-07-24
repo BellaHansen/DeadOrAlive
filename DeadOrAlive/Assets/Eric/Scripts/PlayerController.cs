@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour, IDamage
         HP = HPOrig;
         UpdatePlayerUI();
         controller.enabled = false;
-        transform.position= gameManager.instance.playerSpawnPos.transform.position;
+        transform.position = gameManager.instance.playerSpawnPos.transform.position;
         controller.enabled = true;
     }
     void movement()
@@ -123,11 +123,11 @@ public class PlayerController : MonoBehaviour, IDamage
         isShooting = false;
     }
 
-    public void HealPlayer(Collider other)
+    public void HealPlayer(Collider other, int healthAmount)
     {
         if (other.CompareTag("Player"))
         {
-            HP = HPOrig;
+            HP += healthAmount;
         }
     }
 
