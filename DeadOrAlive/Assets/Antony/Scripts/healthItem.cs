@@ -14,17 +14,10 @@ public class healthItem : inventoryItem
         
     }
 
-    private void OnTriggerEnter(Collider other)
+    //method to return health item value
+    public int GetHealthValue()
     {
-        //Check if the colliding object is the player
-        if (other.CompareTag("Player"))
-        {
-            //Call the heal method from player controller
-            //other.GetComponent<PlayerController>().HealPlayer(healthVal);
-
-            //Destroy the health item after it has been collected
-            Destroy(this);
-        }
+        return healthVal;
     }
 
 }
