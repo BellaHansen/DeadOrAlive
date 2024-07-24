@@ -13,7 +13,7 @@ public class healthItem : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             //Call the heal method from player controller
-            //other.GetComponent<PlayerController>().HealPlayer();
+            //other.GetComponent<PlayerController>().HealPlayer(healthVal);
 
             //Destroy the health item after it has been collected
             Destroy(gameObject);

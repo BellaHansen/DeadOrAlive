@@ -37,6 +37,9 @@ public class gameManager : MonoBehaviour
     //Variable for wave count text
     [SerializeField] TMP_Text waveCountText;
 
+    //Variable for ammo current and max
+    [SerializeField] TMP_Text ammoCur, ammoMax;
+
     //Variable for player
     public GameObject player;
 

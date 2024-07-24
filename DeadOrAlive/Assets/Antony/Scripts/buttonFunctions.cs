@@ -37,7 +37,7 @@ public class buttonFunctions : MonoBehaviour
     //Create respawn function
     public void respawn()
     {
-        //gameManager.instance.playerScript.spawnPlayer();
+        gameManager.instance.playerScript.SpawnPlayer();
         gameManager.instance.stateUnpause();
     }
 }
