@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour, IDamage
         HP = HPOrig;
         UpdatePlayerUI();
         controller.enabled = false;
-        gameManager.instance.playerSpawnPos.transform.position;
+        transform.position= gameManager.instance.playerSpawnPos.transform.position;
         controller.enabled = true;
     }
     void movement()

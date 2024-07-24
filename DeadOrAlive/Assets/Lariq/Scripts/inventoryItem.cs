@@ -6,8 +6,9 @@ using UnityEngine;
 
 public class inventoryItem : ScriptableObject
 {
-    //creates a scriptable object right click project window create > inventory > inventoory item
-    public string itemName;
-    public Sprite itemIcon;
-    public int itemNum;
+    [SerializeField] private string itemName;
+    [SerializeField] private Sprite itemIcon;
+    [SerializeField] private GameObject itemModel;
+    [SerializeField] private AudioClip itemSound;
+    [SerializeField] private int itemNum;
 }
