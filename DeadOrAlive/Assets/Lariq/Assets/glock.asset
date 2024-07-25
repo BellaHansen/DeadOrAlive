@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 056aade4fd133844e90f1d55d8fc1141, type: 3}
   m_Name: glock
   m_EditorClassIdentifier: 
-  itemName: 
+  itemName: glock 9
   itemIcon: {fileID: 0}
   itemNum: 0
   Damage: 0
+  itemModel: {fileID: 386164790876164519, guid: dd53cfaed2427944aa96cf82fd53fa80, type: 3}
   bullet: {fileID: 0}
   shootRate: 0.5
   shootDist: 10

@@ -25,6 +25,9 @@ public class gameManager : MonoBehaviour
     //Variable for lose menu
     [SerializeField] GameObject menuLose;
 
+    //inventorymanager 
+    [SerializeField] GameObject inventoryManager;
+
     //Variable for player HP bar
     public Image playerHPBar;
 
@@ -61,6 +64,11 @@ public class gameManager : MonoBehaviour
     //Variable for wave count
     int waveCount;
 
+    // references playerState
+    private playerState playerHealth;
+
+    private WeaponController weaponController;
+
 
 
     // Start is called before the first frame update
@@ -79,6 +87,8 @@ public class gameManager : MonoBehaviour
 
         //Define the player spawn position
         playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
+
+        weaponController= player.GetComponent<WeaponController>();
     }
 
     // Update is called once per frame
@@ -182,5 +192,34 @@ public class gameManager : MonoBehaviour
 
         //Toggle menu active
         menuActive.SetActive(true);
+    }
+    public void equipWeapon(Weapons weapon)
+    {
+        //euip player with picked up weapon
+        weaponController.equipWeapon(weapon);
+        updateAmmoUI();
+    }
+
+    public void updateAmmoUI()
+    {
+        ammoCur.text = weaponController.getCurrentAmmo().ToString();
+        ammoMax.text = weaponController.getMaxAmmo().ToString();
+    }
+
+    public void healPlayer(int healthAmount)
+    {
+        playerHealth.Heal(healthAmount);
+        updateHealthUI();
+    }
+
+    public void playerTakeDamage(int damageAmount)
+    {
+        playerHealth.TakeDamage(damageAmount);
+        updateHealthUI();
+    }
+
+    public void updateHealthUI()
+    {
+        playerHPBar.fillAmount = (float)playerHealth.GetCurrentHealth() / playerHealth.GetMaxHealth();
     }
 }

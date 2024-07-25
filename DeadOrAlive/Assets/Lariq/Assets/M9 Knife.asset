@@ -12,13 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1466386511b84e24ab77e773c263514b, type: 3}
   m_Name: M9 Knife
   m_EditorClassIdentifier: 
-  itemName: 
+  itemName: m9 knife
   itemIcon: {fileID: 0}
   itemNum: 0
   Damage: 0
+  itemModel: {fileID: 163931059486845627, guid: f2de2a8fd96d2c748b8cd2830bf0adab, type: 3}
   meleeModel: {fileID: 163931059486845627, guid: f2de2a8fd96d2c748b8cd2830bf0adab, type: 3}
   meleeDamage: 55
   meleeDistance: 5
   attackRate: 10
   hitEffect: {fileID: 0}
   meleeSound: {fileID: 0}
+  lastAttack: 0

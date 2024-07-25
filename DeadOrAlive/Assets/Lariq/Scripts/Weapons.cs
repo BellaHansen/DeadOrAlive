@@ -2,17 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapons : MonoBehaviour
+public abstract class Weapons : inventoryItem
 {
-    // Start is called before the first frame update
-    void Start()
+    public enum WeaponType
     {
-        
+        Pistol,
+        AssaultRifle,
+        Knife,
+        Shotgun
     }
+    //can be pistol,knife, AssaultRifle
+    [SerializeField] private WeaponType weaponType;
+    //put actual weapon model
+    [SerializeField] public GameObject weaponModel;
+    //how much damage can deal
+    [SerializeField] private int damage;
+    //how far it can go
+    [SerializeField] private int range;
+    //how fast weapon attack or shoot
+    [SerializeField] private float attackRate;
+    [SerializeField] private AudioClip attackSound;
 
-    // Update is called once per frame
-    void Update()
+    public abstract void Attack(Vector3 position, Quaternion rotation);
+
+    public override void Use(GameObject player)
     {
-        
+        WeaponController weaponController = player.GetComponent<WeaponController>();
+        if (weaponController != null)
+        {
+            weaponController.equipWeapon(this);
+        }
     }
 }

@@ -4,14 +4,17 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "Health Item", menuName = "Inventory/Health Item")]
 
-public class healthItem : inventoryItem
+public abstract class healthItem : inventoryItem
 {
     //Variable for health value
     [SerializeField] int healthVal;
 
-    public override void Attack(Vector3 position, Quaternion rotation)
+    public override void Use(GameObject player)
     {
-        
+        PlayerController controller = player.GetComponent<PlayerController>();
+        if (controller != null)
+        {
+        }
     }
 
     //method to return health item value

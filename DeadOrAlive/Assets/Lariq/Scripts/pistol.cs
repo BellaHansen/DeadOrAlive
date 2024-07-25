@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Pistol", menuName = "Inventory/Pistol")]
-public class pistol : inventoryItem
+public class pistol : Weapons
 {
     // Bullet prefab
     [SerializeField] private GameObject bullet;
