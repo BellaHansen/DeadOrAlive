@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEditor.Search;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour, IDamage
@@ -9,7 +10,6 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] LayerMask ignoreMask;
     [SerializeField] GameObject bullet;
 
-    [SerializeField] int HP;
     [SerializeField] int origSpeed;
     [SerializeField] int sprintMod;
     [SerializeField] int jumpsMax;
@@ -19,16 +19,18 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] int shootDist;
 
     [SerializeField] float shootRate;
+    [SerializeField] float HP;
     [SerializeField] float regenMod;
 
     Vector3 moveDir;
     Vector3 playerVel;
+    public enum LeanState { None, Left, Right };
+    public LeanState currentLeanState;
 
-    public bool leaningRight;
-    public bool leaningLeft;
     bool isleaning;
     bool isShooting;
     bool isRegen;
+    bool isBeingDamaged;
 
     int jumpCount;
     int HPOrig;
@@ -37,7 +39,7 @@ public class PlayerController : MonoBehaviour, IDamage
     // Start is called before the first frame update
     void Start()
     {
-        HPOrig = HP;
+        HPOrig = (int)HP;
         SpawnPlayer();
     }
 
@@ -53,6 +55,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public void SpawnPlayer()
     {
+        currentLeanState = LeanState.None;
         HP = HPOrig;
         UpdatePlayerUI();
         controller.enabled = false;
@@ -87,6 +90,10 @@ public class PlayerController : MonoBehaviour, IDamage
             StartCoroutine(shoot());
         }
         LeanMechanics();
+        if (!isBeingDamaged && HP <= HPOrig - 5)
+        {
+            StartCoroutine(Regen());
+        }
     }
 
     void sprint()
@@ -130,6 +137,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public void TakeDamage(int amount)
     {
+        isBeingDamaged = true;
         HP -= amount;
         UpdatePlayerUI();
         StartCoroutine(FlashDamage());
@@ -137,6 +145,7 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             gameManager.instance.youLose();
         }
+        isBeingDamaged = false;
     }
 
     IEnumerator FlashDamage()
@@ -160,30 +169,54 @@ public class PlayerController : MonoBehaviour, IDamage
     }
     public bool IsLeaning()
     {
-        if (!isleaning)
+        if (currentLeanState == LeanState.None)
         {
-            return false;
+            if (Input.GetButtonDown("leanL"))
+            {
+                currentLeanState = LeanState.Left;
+                isleaning = true;
+            }
+            else if (Input.GetButtonDown("leanR"))
+            {
+                currentLeanState = LeanState.Right;
+                isleaning = true;
+            }
         }
-        else if (Input.GetButtonUp("leanL"))
+        else if (currentLeanState == LeanState.Left)
         {
-            leaningLeft = !leaningLeft;
-            isleaning = true;
+            if (Input.GetButtonDown("leanL"))
+            {
+                currentLeanState = LeanState.None;
+                isleaning = false;
+            }
+            else if (Input.GetButtonDown("leanR"))
+            {
+                currentLeanState = LeanState.Right;
+            }
         }
-        else if (Input.GetButtonUp("leanR"))
+        else if (currentLeanState == LeanState.Right)
         {
-            leaningRight = !leaningRight;
-            isleaning = true;
+            if (Input.GetButtonDown("leanR"))
+            {
+                currentLeanState = LeanState.None;
+                isleaning = false;
+            }
+            else if (Input.GetButtonDown("leanL"))
+            {
+                currentLeanState = LeanState.Left;
+            }
         }
-
         return isleaning;
     }
+
     public void UpdatePlayerUI()
     {
         gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
     }
 
-    void Regen()
+    IEnumerator Regen()
     {
-        HP += (int)regenMod;
+        HP += regenMod;
+        yield return new WaitForSeconds(4f);
     }
 }

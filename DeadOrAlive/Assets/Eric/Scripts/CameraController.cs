@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static PlayerController;
 
 public class CameraController : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class CameraController : MonoBehaviour
     GameObject player;
     bool leanleft;
     bool leanright;
-    float rotX;
+    public float rotX;
 
     // Start is called before the first frame update
     void Start()
@@ -43,5 +44,19 @@ public class CameraController : MonoBehaviour
         //rotate the player on the Y-Axis
         transform.parent.Rotate(Vector3.up * mouseX);
 
+        LeanCamera();
+
+    }
+
+    void LeanCamera()
+    {
+        if (gameManager.instance.playerScript.IsLeaning() && gameManager.instance.playerScript.currentLeanState == PlayerController.LeanState.Right)
+        {
+            transform.localRotation = Quaternion.Euler(rotX, Input.GetAxis("Mouse Y"), transform.rotation.z - 45);
+        }
+        else if (gameManager.instance.playerScript.IsLeaning() && gameManager.instance.playerScript.currentLeanState == PlayerController.LeanState.Left)
+        {
+            transform.localRotation = Quaternion.Euler(rotX, Input.GetAxis("Mouse Y"), transform.rotation.z + 45);
+        }
     }
 }
