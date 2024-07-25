@@ -217,8 +217,6 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             if (hit.transform.CompareTag("Item"))
             {
-                gameManager.instance.Reticle = false;
-                gameManager.instance.ItemRet = true;
                 if (Input.GetKeyDown(KeyCode.F))
                 {
                     inventoryItem item = hit.transform.GetComponent<itemPickup>().item;
@@ -228,8 +226,6 @@ public class PlayerController : MonoBehaviour, IDamage
                     }
                 }
             }
-            gameManager.instance.Reticle = true;
-            gameManager.instance.ItemRet = false;
         }
     }
 
