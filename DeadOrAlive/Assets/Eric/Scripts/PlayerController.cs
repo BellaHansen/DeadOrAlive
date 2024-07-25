@@ -27,6 +27,8 @@ public class PlayerController : MonoBehaviour, IDamage
     public enum LeanState { None, Left, Right };
     public LeanState currentLeanState;
 
+    List<inventoryItem> inventoryItems;
+
     bool isleaning;
     bool isShooting;
     bool isRegen;
@@ -208,6 +210,29 @@ public class PlayerController : MonoBehaviour, IDamage
         }
         return isleaning;
     }
+ void pickUpItem()
+    {
+            RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.forward, out hit, 3f))
+        {
+            if (hit.transform.CompareTag("Item"))
+            {
+                gameManager.instance.Reticle = false;
+                gameManager.instance.ItemRet = true;
+                if (Input.GetKeyDown(KeyCode.F))
+                {
+                    inventoryItem item = hit.transform.GetComponent<itemPickup>().item;
+                    if (gameManager.instance.AddItem(item))
+                    {
+                        Destroy(hit.transform.gameObject);
+                    }
+                }
+            }
+            gameManager.instance.Reticle = true;
+            gameManager.instance.ItemRet = false;
+        }
+    }
+
 
     public void UpdatePlayerUI()
     {
