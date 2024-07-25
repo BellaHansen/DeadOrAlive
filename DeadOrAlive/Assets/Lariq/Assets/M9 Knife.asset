@@ -13,11 +13,15 @@ MonoBehaviour:
   m_Name: M9 Knife
   m_EditorClassIdentifier: 
   itemName: m9 knife
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: 5824a0754cfb57646b538904d37251db, type: 3}
   itemNum: 0
   Damage: 0
-  itemModel: {fileID: 163931059486845627, guid: f2de2a8fd96d2c748b8cd2830bf0adab, type: 3}
-  meleeModel: {fileID: 163931059486845627, guid: f2de2a8fd96d2c748b8cd2830bf0adab, type: 3}
+  itemModel: {fileID: 8462237383112997348, guid: 426f9d97d5dde4c499927c344e5442e6, type: 3}
+  weaponType: 0
+  weaponModel: {fileID: 8462237383112997348, guid: 426f9d97d5dde4c499927c344e5442e6, type: 3}
+  damage: 0
+  range: 0
+  attackSound: {fileID: 0}
   meleeDamage: 55
   meleeDistance: 5
   attackRate: 10

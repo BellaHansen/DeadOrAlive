@@ -20,7 +20,6 @@ public abstract class Weapons : inventoryItem
     //how far it can go
     [SerializeField] private int range;
     //how fast weapon attack or shoot
-    [SerializeField] private float attackRate;
     [SerializeField] private AudioClip attackSound;
 
     public abstract void Attack(Vector3 position, Quaternion rotation);

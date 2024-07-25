@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 //Add using TMPro
 using TMPro;
+using static UnityEditor.Progress;
 
 public class gameManager : MonoBehaviour
 {
@@ -27,6 +28,14 @@ public class gameManager : MonoBehaviour
 
     //inventorymanager 
     [SerializeField] GameObject inventoryManager;
+    [SerializeField] private List<Image> itemIcon;
+    [SerializeField] private List<TMP_Text> itemQuantities;
+    [SerializeField] private Image currentItemIcon;
+    [SerializeField] private TMP_Text currentItemQuantity;
+    [SerializeField] private TMP_Text ammoDisplay;
+    [SerializeField] private List<inventoryItem> items = new List<inventoryItem>();
+    public int maxItems = 4;
+    private int currentItemIndex = 0;
 
     //Variable for player HP bar
     public Image playerHPBar;
@@ -68,6 +77,10 @@ public class gameManager : MonoBehaviour
     private playerState playerHealth;
 
     private WeaponController weaponController;
+    private int currentAmmo;
+    private int maxAmmo;
+
+    private bool isVisible;
 
 
 
@@ -88,33 +101,60 @@ public class gameManager : MonoBehaviour
         //Define the player spawn position
         playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
 
-        weaponController= player.GetComponent<WeaponController>();
+        weaponController = player.GetComponent<WeaponController>();
+        currentAmmo = weaponController.getCurrentAmmo();
+        maxAmmo = weaponController.getMaxAmmo();
     }
 
     // Update is called once per frame
     void Update()
     {
+        PauseInput();
+        InventoryInput();
+    }
+    private void PauseInput()
+    {
         if (Input.GetButtonDown("Cancel"))
         {
-
-            //Check if the menu active is null
             if (menuActive == null)
             {
-                //Call function to pause the game
                 statePause();
-
-                //Set the menu active equal to the menu pause
                 menuActive = menuPause;
-
-                //Turn on the menu active
-                menuActive.SetActive(isPaused);
+                menuActive.SetActive(true);
             }
             else if (menuActive == menuPause)
             {
-                //Call stateUnpause()
                 stateUnpause();
             }
         }
+    }
+
+    private void InventoryInput()
+    {
+        if (Input.GetButtonDown("Inventory"))
+        {
+            isVisible = !isVisible;
+            inventoryManager.SetActive(isVisible);
+            UpdateInventoryUI();
+        }
+
+        if (isVisible)
+        {
+            if (Input.GetButtonDown("NextItem"))
+            {
+                NextItem();
+            }
+            if (Input.GetButtonDown("PreviousItem"))
+            {
+                PreviousItem();
+            }
+        }
+    }
+    public void ToggleInventoryUI()
+    {
+        isVisible = !isVisible;
+        inventoryManager.SetActive(isVisible);
+        UpdateInventoryUI();
     }
 
     //Function to pause
@@ -154,10 +194,8 @@ public class gameManager : MonoBehaviour
         menuActive = null;
     }
 
-    //Create a function to update the game goal
-    public void updateGameGoal(int amount)
-    {
         //update zombie count
+        /*
         zombieCount += amount;
 
         //update zombie count display
@@ -178,8 +216,70 @@ public class gameManager : MonoBehaviour
 
             //Toggle menu active
             menuActive.SetActive(isPaused);
-        }
-    } 
+        } */
+        public void updateGameGoal(int amount)
+        {
+            // Check if waveManager instance is null
+            if (waveManager.instance == null)
+            {
+                Debug.LogError("waveManager instance is null");
+                return;
+            }
+
+            // Update zombie count
+            zombieCount += amount;
+
+            // Check if zombieCountText is null
+            if (zombieCountText != null)
+            {
+                // Update zombie count display
+                zombieCountText.text = zombieCount.ToString("F0");
+            }
+            else
+            {
+                Debug.LogError("zombieCountText is not assigned");
+            }
+
+            // Check if waveCountText is null
+            if (waveCountText != null)
+            {
+                // Update wave count display
+                waveCountText.text = waveManager.instance.currentWave.ToString("F0");
+            }
+            else
+            {
+                Debug.LogError("waveCountText is not assigned");
+            }
+
+            // Check win condition
+            if (zombieCount <= 0 && waveManager.instance.currentWave >= waveManager.instance.spawners.Length)
+            {
+                // Player wins
+                // Pause the game
+                statePause();
+
+                // Set menu active to menu win
+                if (menuWin != null)
+                {
+                    menuActive = menuWin;
+                }
+                else
+                {
+                    Debug.LogError("menuWin is not assigned");
+                }
+
+                // Toggle menu active
+                if (menuActive != null)
+                {
+                    menuActive.SetActive(isPaused);
+                }
+                else
+                {
+                    Debug.LogError("menuActive is not assigned");
+                }
+            }
+        
+    }
 
     //Create a function to lose 
     public void youLose()
@@ -222,4 +322,80 @@ public class gameManager : MonoBehaviour
     {
         playerHPBar.fillAmount = (float)playerHealth.GetCurrentHealth() / playerHealth.GetMaxHealth();
     }
+    public void UpdateInventoryUI()
+    {
+        for (int i = 0; i < itemIcon.Count; i++)
+        {
+            if (i < items.Count)
+            {
+                itemIcon[i].sprite= items[i].itemIcon;
+                itemQuantities[i].text = items[i].itemNum.ToString();
+            }
+            else
+            {
+                itemIcon[i].sprite = null;
+                itemQuantities[i].text = "0";
+            }
+        }
+
+        inventoryItem currentItem = GetCurrentItem();
+        if (currentItem != null)
+        {
+            currentItemIcon.sprite = currentItem.itemIcon;
+            currentItemQuantity.text = currentItem.itemNum.ToString();
+        }
+        else
+        {
+            currentItemIcon.sprite = null;
+            currentItemQuantity.text = "0";
+        }
+    }
+    public bool AddItem(inventoryItem item)
+    {
+        if (items.Count >= maxItems)
+        {
+            Debug.Log("Inventory is full");
+            return false;
+        }
+        items.Add(item);
+        UpdateInventoryUI();  // Updates the UI
+        return true;
+    }
+
+    public void AddAmmo(int amount)
+    {
+        currentAmmo = Mathf.Min(currentAmmo + amount, maxAmmo);
+        updateAmmoUI();
+    }
+
+    public bool RemoveItem(inventoryItem item)
+    {
+        bool result = items.Remove(item);
+        UpdateInventoryUI();  // Update the UI through the GameManager
+        return result;
+    }
+
+    public inventoryItem GetCurrentItem()
+    {
+        if (items.Count == 0) return null;
+        return items[currentItemIndex];
+    }
+
+    public void NextItem()
+    {
+        if (items.Count == 0) return;
+        currentItemIndex = (currentItemIndex + 1) % items.Count;
+        UpdateInventoryUI();  // Update the UI through the GameManager
+    }
+
+    public void PreviousItem()
+    {
+        if (items.Count == 0) return;
+        currentItemIndex = (currentItemIndex - 1 + items.Count) % items.Count;
+        UpdateInventoryUI();
+    }
+
 }
+
+
+

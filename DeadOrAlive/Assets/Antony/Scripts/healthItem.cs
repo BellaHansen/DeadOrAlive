@@ -4,7 +4,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "Health Item", menuName = "Inventory/Health Item")]
 
-public abstract class healthItem : inventoryItem
+public class healthItem : inventoryItem
 {
     //Variable for health value
     [SerializeField] int healthVal;

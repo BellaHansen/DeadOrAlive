@@ -4,9 +4,9 @@ using UnityEngine;
 
 public abstract class inventoryItem : ScriptableObject
 {
-    [SerializeField] private string itemName;
-    [SerializeField] private Sprite itemIcon;
-    [SerializeField] private int itemNum;
+    [SerializeField] public string itemName;
+    [SerializeField] public Sprite itemIcon;
+    [SerializeField] public int itemNum;
     [SerializeField] public int Damage;
 
     [SerializeField] private GameObject itemModel;

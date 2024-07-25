@@ -5,7 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Melee Item", menuName = "Inventory/Melee Item")]
 public class MeleeItem : Weapons
 {
-    [SerializeField] private GameObject meleeModel;
     [SerializeField] private int meleeDamage;
     [SerializeField] private int meleeDistance;
     [SerializeField] private float attackRate;
