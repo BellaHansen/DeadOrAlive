@@ -20062,6 +20062,8 @@ MonoBehaviour:
   damageFlashScreen: {fileID: 5367493795292550204}
   zombieCountText: {fileID: 940030057664783521}
   waveCountText: {fileID: 7801360327281227546}
+  ammoCur: {fileID: 0}
+  ammoMax: {fileID: 0}
   player: {fileID: 4873898550512338518}
   playerScript: {fileID: 8264467877075385245}
   playerSpawnPos: {fileID: 6625584966040982348}
@@ -25419,6 +25421,9 @@ MonoBehaviour:
   anim: {fileID: 1024552066034795364}
   model: {fileID: 2789195798769985290}
   damageColor: {r: 1, g: 0, b: 0, a: 0.34117648}
+  ignoreMask:
+    serializedVersion: 2
+    m_Bits: 0
   attackPos: {fileID: 4875035510872868122}
   headPos: {fileID: 3474386024349340737}
   HP: 25
@@ -25427,6 +25432,7 @@ MonoBehaviour:
   viewAngle: 45
   roamDist: 12
   roamTimer: 1
+  attackDamage: 0
   attackRate: 2
   whereISpawned: {fileID: 3635533932413012312}
 --- !u!114 &8075229221312420313
@@ -25710,7 +25716,7 @@ Animator:
   m_GameObject: {fileID: 5837019751001313285}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 4dd08149a73761d46945acc455781ac0, type: 3}
-  m_Controller: {fileID: 9100000, guid: 7923a020d0e681c439ceec2cb2167305, type: 2}
+  m_Controller: {fileID: 9100000, guid: 2b7768a07bb7c9a499377e3a1e58bf5b, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -25854,6 +25860,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5355017bf1fda8c4cbd3b9ec30e68ef5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemName: 
+  itemIcon: {fileID: 0}
+  itemNum: 0
+  Damage: 0
+  itemModel: {fileID: 0}
   healthVal: 20
 --- !u!114 &8400081565261313941
 MonoBehaviour:

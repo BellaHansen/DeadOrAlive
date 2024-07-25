@@ -123,12 +123,9 @@ public class PlayerController : MonoBehaviour, IDamage
         isShooting = false;
     }
 
-    public void HealPlayer(Collider other, int healthAmount)
+    public void HealPlayer(int healthAmount)
     {
-        if (other.CompareTag("Player"))
-        {
-            HP += healthAmount;
-        }
+        HP += healthAmount;
     }
 
     public void TakeDamage(int amount)
@@ -151,7 +148,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     void LeanMechanics()
     {
-        if(IsLeaning())
+        if (IsLeaning())
         {
             controller.Move(moveDir * speed * Time.deltaTime);
         }
@@ -164,17 +161,15 @@ public class PlayerController : MonoBehaviour, IDamage
     public bool IsLeaning()
     {
         if (!isleaning)
-        { 
+        {
             return false;
         }
-
-        if (Input.GetButtonUp("leanL"))
+        else if (Input.GetButtonUp("leanL"))
         {
             leaningLeft = !leaningLeft;
             isleaning = true;
         }
-
-        if (Input.GetButtonUp("leanR"))
+        else if (Input.GetButtonUp("leanR"))
         {
             leaningRight = !leaningRight;
             isleaning = true;
@@ -185,5 +180,10 @@ public class PlayerController : MonoBehaviour, IDamage
     public void UpdatePlayerUI()
     {
         gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
+    }
+
+    void Regen()
+    {
+        HP += (int)regenMod;
     }
 }
