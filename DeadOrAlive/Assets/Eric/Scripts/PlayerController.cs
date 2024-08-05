@@ -21,13 +21,13 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] float shootRate;
     [SerializeField] float HP;
     [SerializeField] float regenMod;
-
+    Inventory inventory;
     Vector3 moveDir;
     Vector3 playerVel;
     public enum LeanState { None, Left, Right };
     public LeanState currentLeanState;
 
-    List<inventoryItem> inventoryItems;
+    List<IInventoryItem> inventoryItems;
 
     bool isleaning;
     bool isShooting;
@@ -219,8 +219,8 @@ public class PlayerController : MonoBehaviour, IDamage
             {
                 if (Input.GetKeyDown(KeyCode.F))
                 {
-                    inventoryItem item = hit.transform.GetComponent<itemPickup>().item;
-                    if (gameManager.instance.AddItem(item))
+                    weaponStats item = hit.transform.GetComponent<itemPickup>().weapon;
+                    if (inventory.AddItem(item))
                     {
                         Destroy(hit.transform.gameObject);
                     }

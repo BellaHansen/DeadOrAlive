@@ -26,16 +26,8 @@ public class gameManager : MonoBehaviour
     //Variable for lose menu
     [SerializeField] GameObject menuLose;
 
-    //inventorymanager 
-    [SerializeField] GameObject inventoryManager;
-    [SerializeField] private List<Image> itemIcon;
-    [SerializeField] private List<TMP_Text> itemQuantities;
-    [SerializeField] private Image currentItemIcon;
-    [SerializeField] private TMP_Text currentItemQuantity;
-    [SerializeField] private TMP_Text ammoDisplay;
-    [SerializeField] private List<inventoryItem> items = new List<inventoryItem>();
-    public int maxItems = 4;
-    private int currentItemIndex = 0;
+    [SerializeField] GameObject inventoryMenu;
+
 
     //Variable for player HP bar
     public Image playerHPBar;
@@ -79,7 +71,12 @@ public class gameManager : MonoBehaviour
     private WeaponController weaponController;
     private int currentAmmo;
     private int maxAmmo;
-
+    Inventory inventory;
+    [SerializeField] private List<Image> itemIcons;
+    [SerializeField] private List<TMP_Text> itemQuantities;
+    List<weaponStats> weapons;
+    private Image currentItemIcon;
+    private TMP_Text currentItemQuantity;
     private bool isVisible;
 
 
@@ -134,7 +131,7 @@ public class gameManager : MonoBehaviour
         if (Input.GetButtonDown("Inventory"))
         {
             isVisible = !isVisible;
-            inventoryManager.SetActive(isVisible);
+            inventoryMenu.SetActive(isVisible);
             UpdateInventoryUI();
         }
 
@@ -142,18 +139,18 @@ public class gameManager : MonoBehaviour
         {
             if (Input.GetButtonDown("NextItem"))
             {
-                NextItem();
+                inventory.NextItem();
             }
             if (Input.GetButtonDown("PreviousItem"))
             {
-                PreviousItem();
+                inventory.PreviousItem();
             }
         }
     }
     public void ToggleInventoryUI()
     {
         isVisible = !isVisible;
-        inventoryManager.SetActive(isVisible);
+        inventoryMenu.SetActive(isVisible);
         UpdateInventoryUI();
     }
 
@@ -293,7 +290,7 @@ public class gameManager : MonoBehaviour
         //Toggle menu active
         menuActive.SetActive(true);
     }
-    public void equipWeapon(Weapons weapon)
+    public void equipWeapon(weaponStats weapon)
     {
         //euip player with picked up weapon
         weaponController.equipWeapon(weapon);
@@ -322,44 +319,21 @@ public class gameManager : MonoBehaviour
     {
         playerHPBar.fillAmount = (float)playerHealth.GetCurrentHealth() / playerHealth.GetMaxHealth();
     }
-    public void UpdateInventoryUI()
+    private void UpdateInventoryUI()
     {
-        for (int i = 0; i < itemIcon.Count; i++)
+        for (int i = 0; i < itemIcons.Count; i++)
         {
-            if (i < items.Count)
+            if (i < inventory.weapons.Count)
             {
-                itemIcon[i].sprite= items[i].itemIcon;
-                itemQuantities[i].text = items[i].itemNum.ToString();
+                itemIcons[i].sprite = inventory.weapons[i].itemIcon;
+                //itemQuantities[i].text = inventory.weapons[i].ItemNum.ToString();
             }
             else
             {
-                itemIcon[i].sprite = null;
-                itemQuantities[i].text = "0";
+                itemIcons[i].sprite = null;
+                itemQuantities[i].text = "f0";
             }
         }
-
-        inventoryItem currentItem = GetCurrentItem();
-        if (currentItem != null)
-        {
-            currentItemIcon.sprite = currentItem.itemIcon;
-            currentItemQuantity.text = currentItem.itemNum.ToString();
-        }
-        else
-        {
-            currentItemIcon.sprite = null;
-            currentItemQuantity.text = "0";
-        }
-    }
-    public bool AddItem(inventoryItem item)
-    {
-        if (items.Count >= maxItems)
-        {
-            Debug.Log("Inventory is full");
-            return false;
-        }
-        items.Add(item);
-        UpdateInventoryUI();  // Updates the UI
-        return true;
     }
 
     public void AddAmmo(int amount)
@@ -367,34 +341,6 @@ public class gameManager : MonoBehaviour
         currentAmmo = Mathf.Min(currentAmmo + amount, maxAmmo);
         updateAmmoUI();
     }
-
-    public bool RemoveItem(inventoryItem item)
-    {
-        bool result = items.Remove(item);
-        UpdateInventoryUI();  // Update the UI through the GameManager
-        return result;
-    }
-
-    public inventoryItem GetCurrentItem()
-    {
-        if (items.Count == 0) return null;
-        return items[currentItemIndex];
-    }
-
-    public void NextItem()
-    {
-        if (items.Count == 0) return;
-        currentItemIndex = (currentItemIndex + 1) % items.Count;
-        UpdateInventoryUI();  // Update the UI through the GameManager
-    }
-
-    public void PreviousItem()
-    {
-        if (items.Count == 0) return;
-        currentItemIndex = (currentItemIndex - 1 + items.Count) % items.Count;
-        UpdateInventoryUI();
-    }
-
 }
 
 

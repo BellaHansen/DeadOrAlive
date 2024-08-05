@@ -9,36 +9,45 @@ public class playerInteraction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        pickUpItem();
+        PickUpItem();
+        SwitchItems();
     }
-    void pickUpItem()
+
+    void PickUpItem()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetButtonDown("PickUp"))
         {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            if (Physics.Raycast(transform.position, transform.forward, out hit, 3f))
+
+            if (Physics.Raycast(ray, out hit))
             {
                 if (hit.transform.CompareTag("Item"))
                 {
-                    inventoryItem item = hit.transform.GetComponent<itemPickup>().item;
-                    if (inventory.AddItem(item))
+                    // Checks if the item is able to be picked up
+                    itemPickup itemPickups = hit.transform.GetComponent<itemPickup>();
+                    if (itemPickups != null)
                     {
-                        Destroy(hit.transform.gameObject);
+                        weaponStats item = itemPickups.weapon;
+                        if (inventory.AddItem(item))
+                        {
+                            Destroy(hit.transform.gameObject);
+                        }
                     }
                 }
             }
-
         }
     }
-    void switchItems()
+
+    void SwitchItems()
     {
-        //goes to next item
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        // Goes to the next item
+        if (Input.GetButtonDown("NextItem"))
         {
             inventory.NextItem();
         }
-        //goes to previs item
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        // Goes to the previous item
+        if (Input.GetButtonDown("PreviousItem"))
         {
             inventory.PreviousItem();
         }

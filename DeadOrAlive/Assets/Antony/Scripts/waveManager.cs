@@ -8,22 +8,35 @@ public class waveManager : MonoBehaviour
     public static waveManager instance;
 
     //Variable for the zombie spawner
-    public zombieSpawn[] spawners;
+    public ZombieSpawn[] spawners;
 
     //Variable for the time between waves
-    [SerializeField] int timeBetweenWaves;
+    [SerializeField] float timeBetweenWaves;
+    [SerializeField] List<GameObject> zombieModel;
+    [SerializeField] float startZombieCount;
 
     //Variable for current wave
     public int currentWave;
+    private int zombiesKilled = 0;
+    private int zombiesToSpawn = 0;
+    private bool wavesStopped = false;
+    private Coroutine waveCoroutine;
+
 
     // Start is called before the first frame update
     //Change start for swake
     void Awake()
     {
         //Instantiate
-        instance = this;
-
-        StartCoroutine(startWave());
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        waveCoroutine = StartCoroutine(startWave());
     }
 
     //Create IEnumerator to start wave
@@ -36,7 +49,38 @@ public class waveManager : MonoBehaviour
         {
             yield return new WaitForSeconds(timeBetweenWaves);
 
-            spawners[currentWave - 1].startWave();
+
+            spawners[currentWave - 1].startSpawning();
+            zombiesToSpawn = Mathf.RoundToInt(startZombieCount * currentWave); // Example logic
         }
+        else
+        {
+            // If no more spawners are available, stop waves
+            StopWaves();
+            yield break;
+        }
+    }
+    public void ZombieKilled()
+    {
+        zombiesKilled++;
+        if (zombiesKilled >= zombiesToSpawn)
+        {
+            zombiesKilled = 0;
+            if (!wavesStopped && waveCoroutine == null)
+            {
+                waveCoroutine = StartCoroutine(startWave());
+            }
+        }
+    }
+
+    public void StopWaves()
+    {
+        wavesStopped = true;
+        if (waveCoroutine != null)
+        {
+            StopCoroutine(waveCoroutine);
+            waveCoroutine = null;
+        }
+        Debug.Log("You Win");
     }
 }

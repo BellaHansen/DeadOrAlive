@@ -6,25 +6,18 @@ public class WeaponController : MonoBehaviour
 {
     //simple class to manage weapon equipping (referenced by playerController and gameManager)
     [SerializeField] private Transform weaponMountPoint;
-    private Weapons currentWeapon;
+    private weaponStats currentWeapon;
     private int currentAmmo;
     private int maxAmmo;
 
-    public void equipWeapon(Weapons weapon)
+    public void equipWeapon(weaponStats weapon)
     {
         if (currentWeapon != null)
         {
-            Destroy(currentWeapon.weaponModel);
+            Destroy(currentWeapon.itemModel);
         }
 
-        currentWeapon = Instantiate(weapon.weaponModel, weaponMountPoint).GetComponent<Weapons>();
-    }
-    public void useCurrentWeapon(Vector3 position, Quaternion rotation)
-    {
-        if (currentWeapon != null)
-        {
-            currentWeapon.Attack(position, rotation);
-        }
+        currentWeapon = Instantiate(currentWeapon.itemModel, weaponMountPoint).GetComponent<weaponStats>();
     }
     public int getCurrentAmmo()
     {

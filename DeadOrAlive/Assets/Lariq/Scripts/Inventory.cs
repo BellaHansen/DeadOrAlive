@@ -1,48 +1,65 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    // Start is called before the first frame update
-    public List<inventoryItem> items = new List<inventoryItem>();
-    public int maxItems = 4;
-    private int currentItemIndex = 0;
+    private int maxItems = 4;
+    public List<weaponStats> weapons= new List<weaponStats>();
 
+    private int currentItemIndex = -1;
 
-    public bool AddItem(inventoryItem item)
+    public event EventHandler<InventoryEvents> ItemAdded;
+    public event EventHandler<InventoryEvents> ItemRemoved;
+
+    public bool AddItem(weaponStats item)
     {
-        if (items.Count >= maxItems)
+        if (weapons.Count >= maxItems)
         {
             Debug.Log("Inventory is full");
             return false;
         }
-        items.Add(item);
-        return true;
+
+        return false;
     }
 
-    public bool RemoveItem(inventoryItem item)
+    public bool RemoveItem(weaponStats item)
     {
-        return items.Remove(item);
+        if (weapons.Contains(item))
+        {
+            // drops inventory item on ground
+            weapons.Remove(item);
+
+            return true;
+        }
+
+        Debug.LogWarning("{item.ItemName} cant be removed  ");
+        return false;
     }
-    public inventoryItem GetCurrentItem()
+
+    public weaponStats GetCurrentItem()
     {
-        if (items.Count == 0) return null;
-        else
-        return items[currentItemIndex];
+        if (weapons.Count == 0)
+        {
+            Debug.Log("No items in inventory.");
+            return null;
+        }
+        return weapons[currentItemIndex];
     }
 
     public void NextItem()
     {
-        //used to go switch to next item
-        if (items.Count == 0) return;
-        currentItemIndex = (currentItemIndex + 1) % items.Count;
+        if (weapons.Count == 0) return;
+        currentItemIndex = (currentItemIndex + 1) % weapons.Count;
+        Debug.Log($"Current item: {weapons[currentItemIndex].name}");
     }
 
     public void PreviousItem()
     {
-        //used to go switch to previous item
-        if (items.Count == 0) return;
-        currentItemIndex = (currentItemIndex - 1 + items.Count) % items.Count;
+        if (weapons.Count == 0) return;
+        currentItemIndex = (currentItemIndex - 1 + weapons.Count) % weapons.Count;
+        Debug.Log($"Current item: {weapons[currentItemIndex].name}");
     }
+  
 }

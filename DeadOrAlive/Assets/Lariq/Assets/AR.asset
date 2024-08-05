@@ -9,21 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34915d910ca114141b880ec713bc70ad, type: 3}
+  m_Script: {fileID: 11500000, guid: cb13b749f11a5964e8b15861413a816d, type: 3}
   m_Name: AR
   m_EditorClassIdentifier: 
-  itemName: AR
-  itemIcon: {fileID: 21300000, guid: 9ed0b1d7dae550549a4d600d0c18a65b, type: 3}
-  itemNum: 0
-  Damage: 0
   itemModel: {fileID: 919132149155446097, guid: 33269b2b610f4c245a712795c1927939, type: 3}
-  weaponType: 0
-  weaponModel: {fileID: 919132149155446097, guid: 33269b2b610f4c245a712795c1927939, type: 3}
-  damage: 35
-  range: 30
-  attackSound: {fileID: 0}
-  bullet: {fileID: 0}
-  shootRate: 0.5
-  shootDist: 10
-  shootSound: {fileID: 0}
-  shootVol: 1
+  itemIcon: {fileID: 21300000, guid: 36138d4c65bba6b45b81f8ae554d9596, type: 3}
+  itemDamage: 15
+  itemRange: 25
+  shootRate: 0
+  ammoCur: 0
+  ammoMax: 0
+  itemEffect: {fileID: 0}
+  itemSound: {fileID: 0}
+  shootVol: 0

@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static UnityEditor.Progress;
 
 public class itemPickup : MonoBehaviour
 {
     //attach to items that u can pickup
-    [SerializeField] public inventoryItem item; // Item to be picked up
-    private Inventory inventory;
+    [SerializeField] public weaponStats weapon; // Item to be picked up
+    public Inventory inventory;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -20,10 +21,10 @@ public class itemPickup : MonoBehaviour
             if (playerInventory != null)
             {
                 // Try to add the item to the player inventory
-                bool added = playerInventory.AddItem(item);
+                bool added = playerInventory.AddItem(weapon);
                 if (added)
                 {
-                    // Destroy the item in the scene
+                    weapon.ammoCur = weapon.ammoMax;
                     Destroy(gameObject);
                 }
             }

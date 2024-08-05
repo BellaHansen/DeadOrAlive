@@ -46,5 +46,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawners:
   - {fileID: 883096405925980855, guid: cb5d964fc9d12a6439e2e80ee3ceafea, type: 3}
+  - {fileID: 883096405925980855, guid: cb5d964fc9d12a6439e2e80ee3ceafea, type: 3}
   timeBetweenWaves: 5
   currentWave: 0
