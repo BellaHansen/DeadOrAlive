@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 //Add using TMPro
 using TMPro;
-using static UnityEditor.Progress;
+
 
 public class gameManager : MonoBehaviour
 {
