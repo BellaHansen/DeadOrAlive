@@ -4,30 +4,27 @@ using UnityEngine;
 
 public class waveManager : MonoBehaviour
 {
-    //Instance for the wave manager 
+    // Static instance for singleton pattern
     public static waveManager instance;
 
-    //Variable for the zombie spawner
-    public ZombieSpawn[] spawners;
+    // Array of zombie spawners
+    public zombieSpawn[] spawners;
 
-    //Variable for the time between waves
+    // Time between waves
     [SerializeField] float timeBetweenWaves;
     [SerializeField] List<GameObject> zombieModel;
     [SerializeField] float startZombieCount;
 
-    //Variable for current wave
+    // Variables for wave management
     public int currentWave;
     private int zombiesKilled = 0;
     private int zombiesToSpawn = 0;
     private bool wavesStopped = false;
     private Coroutine waveCoroutine;
 
-
-    // Start is called before the first frame update
-    //Change start for swake
-    void Awake()
+    private void Awake()
     {
-        //Instantiate
+        // Singleton pattern implementation
         if (instance == null)
         {
             instance = this;
@@ -36,50 +33,74 @@ public class waveManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        waveCoroutine = StartCoroutine(startWave());
     }
 
-    //Create IEnumerator to start wave
-    public IEnumerator startWave()
+    private void Start()
     {
-        //Increase the current wave
+        // Start the first wave
+        waveCoroutine = StartCoroutine(StartWave());
+    }
+
+    // Coroutine to start a new wave
+    public IEnumerator StartWave()
+    {
+        // Increment the wave counter
         currentWave++;
 
-        if(currentWave <= spawners.Length)
+        if (currentWave <= spawners.Length)
         {
+            // Wait before starting the new wave
             yield return new WaitForSeconds(timeBetweenWaves);
 
+            // Calculate the number of zombies to spawn
+            zombiesToSpawn = Mathf.RoundToInt(startZombieCount * currentWave);
+            zombiesKilled = 0; // Reset the number of zombies killed for the new wave
 
-            spawners[currentWave - 1].startSpawning();
-            zombiesToSpawn = Mathf.RoundToInt(startZombieCount * currentWave); // Example logic
+            // Start spawning zombies using the appropriate spawner
+            spawners[currentWave - 1].StartWave(zombiesToSpawn);
         }
         else
         {
-            // If no more spawners are available, stop waves
+            // All waves completed, stop spawning
             StopWaves();
-            yield break;
         }
     }
+
+    // Method called when a zombie is killed
     public void ZombieKilled()
     {
         zombiesKilled++;
+
+        // Check if all zombies in the current wave are killed
         if (zombiesKilled >= zombiesToSpawn)
         {
-            zombiesKilled = 0;
-            if (!wavesStopped && waveCoroutine == null)
+            zombiesKilled = 0; // Reset for the next wave
+
+            if (!wavesStopped)
             {
-                waveCoroutine = StartCoroutine(startWave());
+                // Stop the current wave coroutine and start the next wave
+                if (waveCoroutine != null)
+                {
+                    StopCoroutine(waveCoroutine);
+                }
+                waveCoroutine = StartCoroutine(StartWave());
             }
         }
     }
 
+    // Check if all waves have been completed
+    public bool AllWavesCompleted()
+    {
+        return currentWave >= spawners.Length;
+    }
+
+    // Stop all waves and declare victory
     public void StopWaves()
     {
         wavesStopped = true;
         if (waveCoroutine != null)
         {
             StopCoroutine(waveCoroutine);
-            waveCoroutine = null;
         }
         Debug.Log("You Win");
     }

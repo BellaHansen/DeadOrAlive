@@ -85,7 +85,7 @@ public class spitterAI : MonoBehaviour, IDamage
 
             if (whereISpawned)
             {
-                whereISpawned.updateEnemyNumber();
+                whereISpawned.UpdateEnemyNumber();
             }
 
             Destroy(gameObject);

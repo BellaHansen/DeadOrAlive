@@ -5,40 +5,43 @@ using UnityEngine;
 public class zombieSpawn : MonoBehaviour
 {
     [SerializeField] GameObject thingToSpawn;
-    [SerializeField] int numToSpawn;
     [SerializeField] int spawnTimer;
     [SerializeField] Transform[] spawnPos;
 
-    int spawnCount;
-    bool isSpawning;
-    bool startSpawning;
-    int numKilled;
+    private int numToSpawn;
+    private int spawnCount;
+    private bool isSpawning;
+    private bool startSpawning;
+    private int numKilled;
+
+    private waveManager waveManager;
 
     private void Start()
     {
-        
+        waveManager = waveManager.instance;
     }
 
     private void Update()
     {
         if (startSpawning && !isSpawning && spawnCount < numToSpawn)
         {
-            StartCoroutine(spawn());
+            StartCoroutine(Spawn());
         }
     }
 
-    public void startWave()
+    public void StartWave(int zombiesToSpawn)
     {
+        numToSpawn = zombiesToSpawn; // Set number of zombies to spawn
         startSpawning = true;
-        gameManager.instance.updateGameGoal(numToSpawn);
+        gameManager.instance.updateGameGoal(numToSpawn); // Notify the game manager
     }
 
-    IEnumerator spawn()
+    private IEnumerator Spawn()
     {
         isSpawning = true;
         int arrayPos = Random.Range(0, spawnPos.Length);
         GameObject objectSpawned = Instantiate(thingToSpawn, spawnPos[arrayPos].position, spawnPos[arrayPos].rotation);
-        
+
         if (objectSpawned.GetComponent<zombieAI>())
         {
             objectSpawned.GetComponent<zombieAI>().whereISpawned = this;
@@ -46,15 +49,18 @@ public class zombieSpawn : MonoBehaviour
 
         spawnCount++;
         yield return new WaitForSeconds(spawnTimer);
+
+        isSpawning = false; // Set isSpawning to false after spawning
     }
 
-    public void updateEnemyNumber()
+    public void UpdateEnemyNumber()
     {
         numKilled++;
 
         if (numKilled >= numToSpawn)
         {
             startSpawning = false;
+            waveManager.ZombieKilled(); // Notify waveManager that zombies are finished spawning
         }
     }
 }
