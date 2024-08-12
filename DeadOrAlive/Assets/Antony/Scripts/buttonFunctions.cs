@@ -23,6 +23,10 @@ public class buttonFunctions : MonoBehaviour
         //Call stateUnpause()
         gameManager.instance.stateUnpause();
     }
+    public void PlayGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
 
     //Exit the game
     public void quit()
