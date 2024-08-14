@@ -11,15 +11,15 @@ public class checkpoint : MonoBehaviour
     //Ontriggerenter for the check point
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && gameManager.instance.playerSpawnPos.transform.position != this.transform.position)
+        if (other.CompareTag("Player") && gameManager.instance != null && gameManager.instance.playerSpawnPos.transform.position != this.transform.position)
         {
             gameManager.instance.playerSpawnPos.transform.position = transform.position;
-            StartCoroutine(flahsModel());
+            StartCoroutine(flashModel());
         }
     }
 
     //Flash the checkpoint
-    IEnumerator flahsModel()
+    IEnumerator flashModel()
     {
         model.material.color = Color.green;
 
