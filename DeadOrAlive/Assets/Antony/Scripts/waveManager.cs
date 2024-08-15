@@ -102,6 +102,6 @@ public class waveManager : MonoBehaviour
         {
             StopCoroutine(waveCoroutine);
         }
-        Debug.Log("You Win");
+        gameManager.instance.updateGameGoal(0); 
     }
 }

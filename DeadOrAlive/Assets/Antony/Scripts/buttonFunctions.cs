@@ -17,11 +17,12 @@ public class buttonFunctions : MonoBehaviour
     //Create restart function
     public void restart()
     {
-        //Reload the scene
+        //load the scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
-        //Call stateUnpause()
+        //access to game manager and call state unpause because if I don't do this the time scale will be zero
         gameManager.instance.stateUnpause();
+
     }
     public void PlayGame()
     {

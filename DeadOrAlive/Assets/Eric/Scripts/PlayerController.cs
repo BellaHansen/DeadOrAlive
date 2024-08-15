@@ -21,22 +21,22 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] float shootRate;
     [SerializeField] float HP;
     [SerializeField] float regenMod;
-    Inventory inventory;
+    
     Vector3 moveDir;
     Vector3 playerVel;
     public enum LeanState { None, Left, Right };
     public LeanState currentLeanState;
 
-    List<IInventoryItem> inventoryItems;
+    public List<IInventoryItem> inventoryItems;
 
-    bool isleaning;
-    bool isShooting;
-    bool isRegen;
-    bool isBeingDamaged;
+   public  bool isleaning;
+    public bool isShooting;
+   public  bool isRegen;
+    public bool isBeingDamaged;
 
-    int jumpCount;
-    int HPOrig;
-    int speed;
+    public int jumpCount;
+    public int HPOrig;
+    public int speed;
 
     // Start is called before the first frame update
     void Start()
@@ -52,6 +52,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
         movement();
         sprint();
+       
 
     }
 
@@ -66,7 +67,7 @@ public class PlayerController : MonoBehaviour, IDamage
     }
     void movement()
     {
-        speed = origSpeed / 2;
+        speed = origSpeed;
         if (controller.isGrounded)
         {
             jumpCount = 0;  // reset jumps to jump again
@@ -92,7 +93,7 @@ public class PlayerController : MonoBehaviour, IDamage
             StartCoroutine(shoot());
         }
         LeanMechanics();
-        if (!isBeingDamaged && HP <= HPOrig - 5)
+        if (!isBeingDamaged && HP <= HPOrig)
         {
             StartCoroutine(Regen());
         }
@@ -103,6 +104,7 @@ public class PlayerController : MonoBehaviour, IDamage
         if (Input.GetButtonDown("Sprint"))
         {
             origSpeed *= sprintMod;
+            
         }
         else if (Input.GetButtonUp("Sprint"))
         {
@@ -113,6 +115,7 @@ public class PlayerController : MonoBehaviour, IDamage
     IEnumerator shoot()
     {
         isShooting = true;
+       
 
         RaycastHit hit;     // origin: camera position, dir: where cam is looking, out: to know what we hit, distance
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignoreMask))
@@ -135,6 +138,7 @@ public class PlayerController : MonoBehaviour, IDamage
     public void HealPlayer(int healthAmount)
     {
         HP += healthAmount;
+        UpdatePlayerUI();
     }
 
     public void TakeDamage(int amount)
@@ -147,7 +151,11 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             gameManager.instance.youLose();
         }
-        isBeingDamaged = false;
+        else
+        {
+            isBeingDamaged = false;
+        }
+        
     }
 
     IEnumerator FlashDamage()
@@ -159,13 +167,13 @@ public class PlayerController : MonoBehaviour, IDamage
 
     void LeanMechanics()
     {
-        if (IsLeaning())
+        if (isleaning)
         {
-            controller.Move(moveDir * speed * Time.deltaTime);
+            controller.Move(moveDir * (speed / 2) * Time.deltaTime);
         }
         else
         {
-            controller.Move(moveDir * origSpeed * Time.deltaTime);
+            controller.Move(moveDir * speed * Time.deltaTime);
         }
 
     }
@@ -210,29 +218,11 @@ public class PlayerController : MonoBehaviour, IDamage
         }
         return isleaning;
     }
- void pickUpItem()
-    {
-            RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 3f))
-        {
-            if (hit.transform.CompareTag("Item"))
-            {
-                if (Input.GetKeyDown(KeyCode.F))
-                {
-                    weaponStats item = hit.transform.GetComponent<itemPickup>().weapon;
-                    if (inventory.AddItem(item))
-                    {
-                        Destroy(hit.transform.gameObject);
-                    }
-                }
-            }
-        }
-    }
 
 
     public void UpdatePlayerUI()
     {
-        gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
+        gameManager.instance.playerHPBar.fillAmount = HP / HPOrig;
     }
 
     IEnumerator Regen()
