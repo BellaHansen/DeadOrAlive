@@ -215,6 +215,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5876694573031106708, guid: ac574fb7a8423b04c802829f9a0cebb9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5876694573031106708, guid: ac574fb7a8423b04c802829f9a0cebb9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5877415006674512489, guid: ac574fb7a8423b04c802829f9a0cebb9, type: 3}
       propertyPath: checkpointPopup
       value: 
@@ -395,7 +403,9 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 8553073056615615459, guid: 642410cce79fa624e8745b23b741bbcc, type: 3}
+    - {fileID: 7406194716143099642, guid: 642410cce79fa624e8745b23b741bbcc, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 642410cce79fa624e8745b23b741bbcc, type: 3}

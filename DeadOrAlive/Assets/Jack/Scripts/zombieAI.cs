@@ -45,6 +45,7 @@ public class zombieAI : MonoBehaviour, IDamage
         startingPos = transform.position;
         stoppingDistOrig = agent.stoppingDistance;
         speedOrig = agent.speed;
+      
         gameManager.instance.updateGameGoal(1);
     }
 
@@ -167,7 +168,7 @@ public class zombieAI : MonoBehaviour, IDamage
 
         if (HP <= 0)
         {
-            //gameManager.instance.updateGameGoal(-1);
+            gameManager.instance.updateGameGoal(-1);
             Destroy(gameObject);
         }
     }
