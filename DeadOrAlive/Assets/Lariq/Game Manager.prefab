@@ -79,3 +79,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d6e9d1853723848a00def81dec75e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  aud: {fileID: 24100000, guid: 3cc9e3335a69d9241963b320d72dba65, type: 2}
+  resolutionDrop: {fileID: 0}
