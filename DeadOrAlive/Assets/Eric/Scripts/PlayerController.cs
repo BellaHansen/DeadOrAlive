@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
+using Unity.VisualScripting;
 using UnityEditor;
 
 using UnityEngine;
@@ -19,8 +21,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] int shootDist;
 
     [SerializeField] float shootRate;
-    [SerializeField] float HP;
-    [SerializeField] float regenMod;
+    [SerializeField] int HP;
     
     Vector3 moveDir;
     Vector3 playerVel;
@@ -31,7 +32,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
    public  bool isleaning;
     public bool isShooting;
-   public  bool isRegen;
+   
     public bool isBeingDamaged;
 
     public int jumpCount;
@@ -41,7 +42,8 @@ public class PlayerController : MonoBehaviour, IDamage
     // Start is called before the first frame update
     void Start()
     {
-        HPOrig = (int)HP;
+        HPOrig = HP;
+
         SpawnPlayer();
     }
 
@@ -50,7 +52,11 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.green);
 
-        movement();
+        //If the game is not paused
+        if (!gameManager.instance.isPaused)
+        {
+            movement();
+        }
         sprint();
        
 
@@ -93,10 +99,7 @@ public class PlayerController : MonoBehaviour, IDamage
             StartCoroutine(shoot());
         }
         LeanMechanics();
-        if (!isBeingDamaged && HP <= HPOrig)
-        {
-            StartCoroutine(Regen());
-        }
+        
     }
 
     void sprint()
@@ -115,7 +118,8 @@ public class PlayerController : MonoBehaviour, IDamage
     IEnumerator shoot()
     {
         isShooting = true;
-       
+
+        UpdatePlayerUI();
 
         RaycastHit hit;     // origin: camera position, dir: where cam is looking, out: to know what we hit, distance
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignoreMask))
@@ -161,7 +165,7 @@ public class PlayerController : MonoBehaviour, IDamage
     IEnumerator FlashDamage()
     {
         gameManager.instance.damageFlashScreen.SetActive(true);
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.1f);
         gameManager.instance.damageFlashScreen.SetActive(false);
     }
 
@@ -222,12 +226,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public void UpdatePlayerUI()
     {
-        gameManager.instance.playerHPBar.fillAmount = HP / HPOrig;
+        gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
     }
 
-    IEnumerator Regen()
-    {
-        HP += regenMod;
-        yield return new WaitForSeconds(4f);
-    }
 }

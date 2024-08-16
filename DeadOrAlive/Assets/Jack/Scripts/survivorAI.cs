@@ -11,7 +11,7 @@ public class survivorAI : MonoBehaviour, IDamage
     [SerializeField] Renderer model;
     [SerializeField] Color damageColor;
 
-    [SerializeField] int HP;
+    [SerializeField] float HP;
     [SerializeField] int faceTargetSpeed;
     [SerializeField] int animSpeed;
 

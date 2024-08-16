@@ -21,6 +21,7 @@ public class zombieAI : MonoBehaviour, IDamage
     [SerializeField] int roamDist;
     [SerializeField] int roamTimer;
     [SerializeField] int attackDamage;
+    [SerializeField] float attackRange = 2.0f;
 
     [SerializeField] int attackRate;
 
@@ -89,6 +90,8 @@ public class zombieAI : MonoBehaviour, IDamage
         playerDir = gameManager.instance.player.transform.position - headPos.position;
         angleToPlayer = Vector3.Angle(playerDir, transform.forward);
 
+        Debug.DrawRay(headPos.position, playerDir);
+
         RaycastHit hit;
         if (Physics.Raycast(headPos.position, playerDir, out hit))
         {
@@ -138,17 +141,20 @@ public class zombieAI : MonoBehaviour, IDamage
         isAttacking = true;
         agent.speed = 0;
         anim.SetTrigger("Attack");
-        RaycastHit hit;
-        yield return new WaitForSeconds(.5f);
-        if (Physics.Raycast(attackPos.position, attackPos.forward, out hit, 3, ~ignoreMask))
-        {
-            IDamage dmg = hit.collider.GetComponent<IDamage>();
 
-            if (hit.transform != transform && dmg != null)
+        yield return new WaitForSeconds(0.5f);
+
+        Collider[] hits = Physics.OverlapSphere(attackPos.position, attackRange, ~ignoreMask);
+        foreach (Collider hit in hits)
+        {
+            IDamage dmg = hit.GetComponent<IDamage>();
+
+            if (dmg != null)
             {
                 dmg.TakeDamage(attackDamage);
             }
         }
+
         yield return new WaitForSeconds(1.5f);
         agent.speed = speedOrig;
         isAttacking = false;

@@ -120,6 +120,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b755f59e48b9f8d4f826ea1f4f12372d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawners: []
-  timeBetweenWaves: 0
+  spawners:
+  - {fileID: 430902687091610514, guid: 3b913326ea7ad85429c75ff854defc2a, type: 3}
+  timeBetweenWaves: 5
+  zombieModel:
+  - {fileID: 6896616681129559483, guid: 3e5a18c867d842f479b929bf8c3630ea, type: 3}
+  startZombieCount: 5
   currentWave: 0

@@ -60,7 +60,9 @@ public class zombieSpawn : MonoBehaviour
         if (numKilled >= numToSpawn)
         {
             startSpawning = false;
-            waveManager.ZombieKilled(); // Notify waveManager that zombies are finished spawning
+            waveManager.ZombieKilled();
+            gameManager.instance.updateGameGoal(-numToSpawn);
+          
         }
     }
 }
