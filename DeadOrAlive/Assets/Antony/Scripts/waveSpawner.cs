@@ -27,10 +27,8 @@ public class waveSpawner : MonoBehaviour
     public void StartWave()
     {
         startSpawning = true;
-        spawnCount = 0;
-        
-        gameManager.instance.updateGameGoal(numToSpawn);
-        
+      
+
     }
 
     IEnumerator Spawn()
@@ -38,12 +36,13 @@ public class waveSpawner : MonoBehaviour
         isSpawning = true;
         GameObject enemyPrefab = thingToSpawn[Random.Range(0, thingToSpawn.Length)];
         int arrayPos = Random.Range(0, spawnPos.Length);
-       GameObject objectSpawned = Instantiate(enemyPrefab, spawnPos[arrayPos].position, spawnPos[arrayPos].rotation);
+        GameObject objectSpawned = Instantiate(enemyPrefab, spawnPos[arrayPos].position, spawnPos[arrayPos].rotation);
 
         if (objectSpawned.GetComponent<zombieAI>())
         {
             objectSpawned.GetComponent<zombieAI>().whereISpawned1 = this;
-        }else if (objectSpawned.GetComponent<newSpitterAI>())
+        }
+        else if (objectSpawned.GetComponent<newSpitterAI>())
         {
             objectSpawned.GetComponent<newSpitterAI>().whereISpawned1 = this;
         }
@@ -61,7 +60,9 @@ public class waveSpawner : MonoBehaviour
         if(numKilled >= numToSpawn)
         {
             startSpawning = false;
+
             StartCoroutine(waveManager.instance.StartWave());
+
         }
     }
 }

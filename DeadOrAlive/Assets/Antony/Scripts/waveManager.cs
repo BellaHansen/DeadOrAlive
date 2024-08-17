@@ -12,17 +12,17 @@ public class waveManager : MonoBehaviour
 
     // Time between waves
     [SerializeField] int timeBetweenWaves;
+
     public int currentWave;
 
- 
+
 
     private void Awake()
     {
         // Singleton pattern implementation
-       
         instance = this;
+
         StartCoroutine(StartWave());
-      
     }
     // Coroutine to start a new wave
     public IEnumerator StartWave()
