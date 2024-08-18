@@ -88,7 +88,7 @@ public class PlayerController : MonoBehaviour, IDamage
         moveDir = Input.GetAxis("Vertical") * transform.forward +
                   Input.GetAxis("Horizontal") * transform.right;
 
-
+        controller.Move(moveDir * speed * Time.deltaTime);
         if (Input.GetButtonDown("Jump") && jumpCount < jumpsMax)
         {
             jumpCount++;
@@ -225,18 +225,15 @@ public class PlayerController : MonoBehaviour, IDamage
         weaponModel.GetComponent<MeshFilter>().sharedMesh = weapon.itemModel.GetComponent<MeshFilter>().sharedMesh;
         weaponModel.GetComponent<MeshRenderer>().sharedMaterial = weapon.itemModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
-
-
-
-
     public void UpdatePlayerUI()
     {
         gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
         if (weapons.Count > 0)
         {
-            weapons[selectedGun].ammoCur.ToString("F0");
-            weapons[selectedGun].ammoMax.ToString("F0");
+            gameManager.instance.ammoCur.text = weapons[selectedGun].ammoCur.ToString("F0");
+            gameManager.instance.ammoMax.text = weapons[selectedGun].ammoMax.ToString("F0");
         }
+       
     }
 
     public void GetGunStats(weaponStats gun)
