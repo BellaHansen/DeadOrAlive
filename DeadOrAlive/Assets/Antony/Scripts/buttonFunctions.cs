@@ -6,14 +6,16 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Audio;
+
 public class buttonFunctions : MonoBehaviour
 {
     public AudioMixer aud;
 
     Resolution[] resolutions;
-    public Dropdown resolutionDrop;
+    
     List<string> resOption = new List<string>();
     //keep in game manager
+    public TMPro.TMP_Dropdown resolutionDrop; 
     public void setVolume(float vol)
     {
         aud.SetFloat("volume", vol);
