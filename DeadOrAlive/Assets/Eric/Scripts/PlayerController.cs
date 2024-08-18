@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] CharacterController controller;
     [SerializeField] LayerMask ignoreMask;
     [SerializeField] GameObject bullet;
+    [SerializeField] List<weaponStats> weapons = new List<weaponStats>();
+    [SerializeField] GameObject weaponModel;
 
     [SerializeField] int origSpeed;
     [SerializeField] int sprintMod;
@@ -98,8 +100,6 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             StartCoroutine(shoot());
         }
-        LeanMechanics();
-        
     }
 
     void sprint()
@@ -169,18 +169,6 @@ public class PlayerController : MonoBehaviour, IDamage
         gameManager.instance.damageFlashScreen.SetActive(false);
     }
 
-    void LeanMechanics()
-    {
-        if (isleaning)
-        {
-            controller.Move(moveDir * (speed / 2) * Time.deltaTime);
-        }
-        else
-        {
-            controller.Move(moveDir * speed * Time.deltaTime);
-        }
-
-    }
     public bool IsLeaning()
     {
         if (currentLeanState == LeanState.None)
@@ -222,6 +210,19 @@ public class PlayerController : MonoBehaviour, IDamage
         }
         return isleaning;
     }
+
+    public void GetWeaponStats(weaponStats weapon)
+    {
+        weapons.Add(weapon);
+
+        shootDamage = weapon.itemDamage;
+        shootDist = weapon.itemRange;
+        shootRate = weapon.shootRate;
+
+        weaponModel.GetComponent<MeshFilter>().sharedMesh = weapon.itemModel.GetComponent<MeshFilter>().sharedMesh;
+        weaponModel.GetComponent<MeshRenderer>().sharedMaterial = weapon.itemModel.GetComponent<MeshRenderer>().sharedMaterial;
+    }
+
 
 
     public void UpdatePlayerUI()

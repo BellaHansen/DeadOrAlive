@@ -1773,7 +1773,7 @@ MonoBehaviour:
   roamDist: 10
   roamTimer: 10
   attackRate: 3
-  whereISpawned: {fileID: 0}
+  whereISpawned: {fileID: 430902687091610514, guid: 3b913326ea7ad85429c75ff854defc2a, type: 3}
 --- !u!136 &7380527505317906039
 CapsuleCollider:
   m_ObjectHideFlags: 0

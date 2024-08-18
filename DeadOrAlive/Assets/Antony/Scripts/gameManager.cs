@@ -161,7 +161,7 @@ public class gameManager : MonoBehaviour
             waveCountText.text = waveManager.instance.currentWave.ToString("F0");
 
             // Check win condition
-            if (zombieCount <= 0 && waveManager.instance.AllWavesCompleted())
+            if (zombieCount <= 0 && waveManager.instance.currentWave >= waveManager.instance.spawners.Length)
             {
                 // Player wins
                 // Pause the game

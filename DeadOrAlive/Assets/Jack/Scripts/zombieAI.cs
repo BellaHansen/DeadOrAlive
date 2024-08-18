@@ -38,7 +38,7 @@ public class zombieAI : MonoBehaviour, IDamage
     Vector3 playerDir;
     Vector3 startingPos;
 
-    public zombieSpawn whereISpawned;
+    public waveSpawner whereISpawned1;
 
     void Start()
     {
@@ -175,6 +175,10 @@ public class zombieAI : MonoBehaviour, IDamage
         if (HP <= 0)
         {
             gameManager.instance.updateGameGoal(-1);
+            if (whereISpawned1)
+            {
+                whereISpawned1.updateEnemyNumber();
+            }
             Destroy(gameObject);
         }
     }
