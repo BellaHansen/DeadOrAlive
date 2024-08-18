@@ -15,7 +15,7 @@ public class buttonFunctions : MonoBehaviour
     
     List<string> resOption = new List<string>();
     //keep in game manager
-    public TMPro.TMP_Dropdown resolutionDrop; 
+    [SerializeField] Dropdown resolutionDrop; 
     public void setVolume(float vol)
     {
         aud.SetFloat("volume", vol);
