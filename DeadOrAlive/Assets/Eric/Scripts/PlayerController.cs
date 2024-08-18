@@ -85,7 +85,7 @@ public class PlayerController : MonoBehaviour, IDamage
         moveDir = Input.GetAxis("Vertical") * transform.forward +
                   Input.GetAxis("Horizontal") * transform.right;
 
-
+        controller.Move(moveDir * speed * Time.deltaTime);
         if (Input.GetButtonDown("Jump") && jumpCount < jumpsMax)
         {
             jumpCount++;
@@ -228,6 +228,7 @@ public class PlayerController : MonoBehaviour, IDamage
     public void UpdatePlayerUI()
     {
         gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
+        
     }
 
 }
