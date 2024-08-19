@@ -128,7 +128,7 @@ public class zombieAI : MonoBehaviour, IDamage
         if (other.CompareTag("Player"))
         {
             playerInRange = false;
-            agent.stoppingDistance = 0;
+           
         }
     }
     void faceTarget()

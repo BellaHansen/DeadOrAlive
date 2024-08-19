@@ -27,6 +27,7 @@ public class waveSpawner : MonoBehaviour
     public void StartWave()
     {
         startSpawning = true;
+        
       
 
     }

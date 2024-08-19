@@ -1770,10 +1770,10 @@ MonoBehaviour:
   faceTargetSpeed: 8
   animSpeed: 5
   viewAngle: 90
-  roamDist: 10
+  roamDist: 20
   roamTimer: 10
   attackRate: 3
-  whereISpawned: {fileID: 430902687091610514, guid: 3b913326ea7ad85429c75ff854defc2a, type: 3}
+  whereISpawned1: {fileID: 0}
 --- !u!136 &7380527505317906039
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1816,7 +1816,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 10
+  m_Radius: 15
   m_Center: {x: 0, y: 1.14, z: 0}
 --- !u!1 &7271948921357805253
 GameObject:
