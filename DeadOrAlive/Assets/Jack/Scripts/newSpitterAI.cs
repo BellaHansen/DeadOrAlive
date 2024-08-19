@@ -124,7 +124,7 @@ public class newSpitterAI : MonoBehaviour, IDamage
         if (other.CompareTag("Player"))
         {
             playerInRange = false;
-            agent.stoppingDistance = 0.5f;
+          
         }
     }
     void faceTarget()
