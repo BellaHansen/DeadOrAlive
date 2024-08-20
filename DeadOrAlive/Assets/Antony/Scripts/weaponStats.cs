@@ -2,25 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(fileName = "New weapon Item", menuName = "Inventory/Weapon  Item")]
 public class weaponStats : ScriptableObject
 {
-    //Variable for gun model
-    public GameObject weaponModel;
-
-    //Variable for shooting damage
-    public int shootdamage;
-
-    //Variable for shooting distance
-    public int shootDist;
-
-    //Variable for shooting rate
-    public float shootRate;
-
-    //Variable for current ammo
-    public int ammoCur;
-
-    //Variable for maximum ammo 
-    public int ammoMax;
-
+    [SerializeField] public GameObject itemModel;
+    [SerializeField] public int itemDamage;
+    [SerializeField] public int itemDistance;
+    [SerializeField] public float shootRate;
+    [SerializeField] public int ammoCur;
+    [SerializeField] public int ammoMax;
+    [SerializeField] public ParticleSystem hitEffect;
+    [SerializeField] public AudioClip shootSound;
+    [SerializeField] public float shootVol;
 }

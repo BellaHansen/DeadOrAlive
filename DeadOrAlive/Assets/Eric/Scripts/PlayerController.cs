@@ -235,12 +235,12 @@ public class PlayerController : MonoBehaviour, IDamage
 
         UpdatePlayerUI();
 
-        shootDamage = gun.shootdamage;
-        shootDist = gun.shootDist;
+        shootDamage = gun.itemDamage;
+        shootDist = gun.itemDistance;
         shootRate = gun.shootRate;
 
-        gun.GetComponent<MeshFilter>().sharedMesh = gun.weaponModel.GetComponent<MeshFilter>().sharedMesh;
-        gun.GetComponent<MeshRenderer>().sharedMaterial = gun.weaponModel.GetComponent<MeshRenderer>().sharedMaterial;
+        gun.GetComponent<MeshFilter>().sharedMesh = gun.itemModel.GetComponent<MeshFilter>().sharedMesh;
+        gun.GetComponent<MeshRenderer>().sharedMaterial = gun.itemModel.GetComponent<MeshRenderer>().sharedMaterial;
 
     }
 
@@ -266,12 +266,12 @@ public class PlayerController : MonoBehaviour, IDamage
         UpdatePlayerUI();
 
         weaponStats gun = weapons[selectedGun];
-        shootDamage = gun.shootdamage;
-        shootDist = gun.shootDist;
+        shootDamage = gun.itemDamage;
+        shootDist = gun.itemDistance;
         shootRate = gun.shootRate;
 
-        weaponModel.GetComponent<MeshFilter>().sharedMesh = gun.weaponModel.GetComponent<MeshFilter>().sharedMesh;
-        weaponModel.GetComponent<MeshRenderer>().sharedMaterial = gun.weaponModel.GetComponent<MeshRenderer>().sharedMaterial;
+        weaponModel.GetComponent<MeshFilter>().sharedMesh = gun.itemModel.GetComponent<MeshFilter>().sharedMesh;
+        weaponModel.GetComponent<MeshRenderer>().sharedMaterial = gun.itemModel.GetComponent<MeshRenderer>().sharedMaterial;
 
     }
 
