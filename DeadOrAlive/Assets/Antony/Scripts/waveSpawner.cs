@@ -8,6 +8,7 @@ public class waveSpawner : MonoBehaviour
     [SerializeField] int spawnTimer;
     [SerializeField] int numToSpawn;
     [SerializeField] Transform[] spawnPos;
+    [SerializeField] GameObject spawnEffect;
 
     int spawnCount;
     bool isSpawning;
@@ -37,6 +38,12 @@ public class waveSpawner : MonoBehaviour
         isSpawning = true;
         GameObject enemyPrefab = thingToSpawn[Random.Range(0, thingToSpawn.Length)];
         int arrayPos = Random.Range(0, spawnPos.Length);
+
+        GameObject effect = Instantiate(spawnEffect, spawnPos[arrayPos].position, spawnPos[arrayPos].rotation);
+        Destroy(effect, 2f);
+
+        yield return new WaitForSeconds(2f);
+
         GameObject objectSpawned = Instantiate(enemyPrefab, spawnPos[arrayPos].position, spawnPos[arrayPos].rotation);
 
         if (objectSpawned.GetComponent<zombieAI>())

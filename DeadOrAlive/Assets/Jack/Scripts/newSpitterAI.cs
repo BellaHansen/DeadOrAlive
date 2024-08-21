@@ -83,7 +83,7 @@ public class newSpitterAI : MonoBehaviour, IDamage
     }
     bool canSeePlayer()
     {
-        playerDir = gameManager.instance.player.transform.position - headPos.position;
+        playerDir = Camera.main.transform.position - headPos.position;
         angleToPlayer = Vector3.Angle(playerDir, transform.forward);
 
         Debug.DrawRay(headPos.position, playerDir);
