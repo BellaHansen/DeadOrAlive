@@ -14093,7 +14093,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1404948688}
-  - component: {fileID: 1404948687}
+  - component: {fileID: 1404948689}
   - component: {fileID: 1404948686}
   - component: {fileID: 1404948685}
   - component: {fileID: 1404948684}
@@ -14175,19 +14175,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1404948683}
   m_Mesh: {fileID: -3380043029275626980, guid: 6bea03a7115c5d748b18a7573d0d4d2b, type: 3}
---- !u!114 &1404948687
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1404948683}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b276f91db21fa345b6ffc75a51a21da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: 25ddb05b4be0cb943a2ead48c43ea222, type: 2}
 --- !u!4 &1404948688
 Transform:
   m_ObjectHideFlags: 0
@@ -14203,6 +14190,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 1.989, y: 96.292, z: 89.983}
+--- !u!114 &1404948689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1404948683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb3bfbf9d8dea8840b92f5203769b0ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 11400000, guid: ee0f3610f115b994a9455ec233be0ef4, type: 2}
 --- !u!1 &1478077921
 GameObject:
   m_ObjectHideFlags: 0
@@ -18196,7 +18196,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4233087111195802151}
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: -50397647144078270, guid: 33269b2b610f4c245a712795c1927939, type: 3}
 --- !u!4 &459146842395398228
 Transform:
   m_ObjectHideFlags: 0
@@ -21169,7 +21169,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 4497072633849421532, guid: 33269b2b610f4c245a712795c1927939, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -21253,8 +21253,8 @@ MonoBehaviour:
   waveCountText: {fileID: 7801360327281227546}
   ammoCur: {fileID: 0}
   ammoMax: {fileID: 0}
-  player: {fileID: 0}
-  playerScript: {fileID: 0}
+  player: {fileID: 7645209751154574283}
+  playerScript: {fileID: 7645209751154574284}
   playerSpawnPos: {fileID: 6625584966040982348}
   checkpointPopup: {fileID: 0}
   isPaused: 0
@@ -22824,7 +22824,7 @@ Transform:
   m_GameObject: {fileID: 4233087111195802151}
   serializedVersion: 2
   m_LocalRotation: {x: -0.46362433, y: 0.51739866, z: 0.4798455, w: 0.53581667}
-  m_LocalPosition: {x: -0.0004846912, y: 0.04366881, z: 0.030569276}
+  m_LocalPosition: {x: 0.005, y: 0.324, z: 0.041}
   m_LocalScale: {x: 0.3375745, y: 0.2051107, z: 0.2733923}
   m_ConstrainProportionsScale: 0
   m_Children: []
