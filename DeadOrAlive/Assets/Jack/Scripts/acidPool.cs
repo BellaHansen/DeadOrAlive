@@ -7,7 +7,7 @@ public class acidPool : MonoBehaviour
 {
     [SerializeField] int damageAmount;
     [SerializeField] float timeBetweenDamage;
-    [SerializeField] float lingerTime;
+   
 
     IDamage dmg;
     bool playerInPool;
@@ -15,7 +15,7 @@ public class acidPool : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(DeleteAfterTime());
+        StartCoroutine(DamageAfterTime());
     }
     private void Update()
     {
@@ -39,17 +39,14 @@ public class acidPool : MonoBehaviour
     {
         playerInPool = false;
     }
-    IEnumerator DeleteAfterTime()
-    {
-        yield return new WaitForSeconds(lingerTime);
-        Destroy(gameObject);
-    }
+    
     IEnumerator DamageAfterTime()
     {
         damage = true;
         if (dmg != null)
         {
             dmg.TakeDamage(damageAmount);
+            Destroy(gameObject);
         }
         yield return new WaitForSeconds(timeBetweenDamage);
         damage = false;
