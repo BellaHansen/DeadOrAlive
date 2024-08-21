@@ -13,6 +13,7 @@ public class zombieAI : MonoBehaviour, IDamage
     [SerializeField] LayerMask ignoreMask;
     [SerializeField] Transform attackPos;
     [SerializeField] Transform headPos;
+    [SerializeField] AudioSource aud;
 
     [SerializeField] int HP;
     [SerializeField] int faceTargetSpeed;
@@ -24,6 +25,15 @@ public class zombieAI : MonoBehaviour, IDamage
     [SerializeField] float attackRange = 2.0f;
 
     [SerializeField] int attackRate;
+
+    [SerializeField] AudioClip[] audHurt;
+    [SerializeField] float audHurtVol;
+
+    [SerializeField] AudioClip[] audRoam;
+    [SerializeField] float audRoamVol;
+
+    [SerializeField] AudioClip[] audAttack;
+    [SerializeField] float audAttackVol;
 
     Color colorOrig;
 
@@ -82,6 +92,8 @@ public class zombieAI : MonoBehaviour, IDamage
         NavMeshHit hit;
         NavMesh.SamplePosition(randomPos, out hit, roamDist, 1);
         agent.SetDestination(hit.position);
+
+        aud.PlayOneShot(audRoam[Random.Range(0, audRoam.Length)], audRoamVol);
 
         isRoaming = false;
     }
@@ -155,6 +167,8 @@ public class zombieAI : MonoBehaviour, IDamage
             }
         }
 
+        aud.PlayOneShot(audAttack[Random.Range(0, audAttack.Length)], audAttackVol);
+
         yield return new WaitForSeconds(1.5f);
         agent.speed = speedOrig;
         isAttacking = false;
@@ -171,6 +185,7 @@ public class zombieAI : MonoBehaviour, IDamage
         HP -= amount;
         agent.SetDestination(gameManager.instance.player.transform.position);
         StartCoroutine(flashDamage());
+        aud.PlayOneShot(audHurt[Random.Range(0, audHurt.Length)], audHurtVol);
 
         if (HP <= 0)
         {
