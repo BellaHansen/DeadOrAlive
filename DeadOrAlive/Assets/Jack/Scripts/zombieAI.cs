@@ -159,11 +159,14 @@ public class zombieAI : MonoBehaviour, IDamage
         Collider[] hits = Physics.OverlapSphere(attackPos.position, attackRange, ~ignoreMask);
         foreach (Collider hit in hits)
         {
-            IDamage dmg = hit.GetComponent<IDamage>();
-
-            if (dmg != null)
+            if (hit.CompareTag("Player"))
             {
-                dmg.TakeDamage(attackDamage);
+                IDamage dmg = hit.GetComponent<IDamage>();
+
+                if (dmg != null)
+                {
+                    dmg.TakeDamage(attackDamage);
+                }
             }
         }
 
