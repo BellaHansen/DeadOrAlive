@@ -40,7 +40,7 @@ public class waveSpawner : MonoBehaviour
         int arrayPos = Random.Range(0, spawnPos.Length);
 
         GameObject effect = Instantiate(spawnEffect, spawnPos[arrayPos].position, spawnPos[arrayPos].rotation);
-        Destroy(effect, 2f);
+        Destroy(effect, 3f);
 
         yield return new WaitForSeconds(2f);
 

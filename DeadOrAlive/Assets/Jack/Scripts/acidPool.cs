@@ -7,7 +7,7 @@ public class acidPool : MonoBehaviour
 {
     [SerializeField] int damageAmount;
     [SerializeField] float timeBetweenDamage;
-    
+   
 
     IDamage dmg;
     bool playerInPool;

@@ -84,3 +84,4 @@ MonoBehaviour:
   numToSpawn: 6
   spawnPos:
   - {fileID: 414091793218428548}
+  spawnEffect: {fileID: 2195216933724704665, guid: e15dd6226aff1ee43bd1223374d57e1d, type: 3}
