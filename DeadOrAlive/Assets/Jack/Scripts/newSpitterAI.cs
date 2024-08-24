@@ -13,6 +13,7 @@ public class newSpitterAI : MonoBehaviour, IDamage
     [SerializeField] Transform attackPos;
     [SerializeField] Transform headPos;
     [SerializeField] GameObject projectile;
+    [SerializeField] AudioSource aud;
 
     [SerializeField] int HP;
     [SerializeField] int faceTargetSpeed;
@@ -22,6 +23,14 @@ public class newSpitterAI : MonoBehaviour, IDamage
     [SerializeField] int roamTimer;
 
     [SerializeField] int attackRate;
+    [SerializeField] AudioClip[] audRoam;
+    [SerializeField] float audRoamVol;
+
+    [SerializeField] AudioClip[] audHurt;
+    [SerializeField] float audHurtVol;
+
+    [SerializeField] AudioClip[] audAttack;
+    [SerializeField] float audAttackVol;
 
     Color colorOrig;
 
@@ -78,6 +87,8 @@ public class newSpitterAI : MonoBehaviour, IDamage
         NavMeshHit hit;
         NavMesh.SamplePosition(randomPos, out hit, roamDist, 1);
         agent.SetDestination(hit.position);
+
+        aud.PlayOneShot(audRoam[Random.Range(0, audRoam.Length)], audRoamVol);
 
         isRoaming = false;
     }
@@ -138,6 +149,9 @@ public class newSpitterAI : MonoBehaviour, IDamage
         agent.speed = 0;
         Instantiate(projectile, attackPos.transform.position, attackPos.transform.rotation);
         anim.SetTrigger("Attack");
+
+        aud.PlayOneShot(audAttack[Random.Range(0, audAttack.Length)], audAttackVol);
+
         yield return new WaitForSeconds(attackRate);
         agent.speed = speedOrig;
         isAttacking = false;
@@ -154,6 +168,7 @@ public class newSpitterAI : MonoBehaviour, IDamage
         HP -= amount;
         agent.SetDestination(gameManager.instance.player.transform.position);
         StartCoroutine(flashDamage());
+        aud.PlayOneShot(audHurt[Random.Range(0, audHurt.Length)], audHurtVol);
 
         if (HP <= 0)
         {
