@@ -134,6 +134,8 @@ public class PlayerController : MonoBehaviour, IDamage
 
         anim.SetTrigger("Shoot");
 
+        weapons[selectedGun].ammoCur--;
+
         UpdatePlayerUI();
 
         RaycastHit hit;     // origin: camera position, dir: where cam is looking, out: to know what we hit, distance
@@ -147,6 +149,10 @@ public class PlayerController : MonoBehaviour, IDamage
             {
                 dmg.TakeDamage(shootDamage);
                 //Instantiate(cube, hit.point, transform.rotation);
+            }
+            else
+            {
+                Instantiate(weapons[selectedGun].hitEffect, hit.point, Quaternion.identity);
             }
         }
 
@@ -225,18 +231,6 @@ public class PlayerController : MonoBehaviour, IDamage
         }
         return isleaning;
     }
-
-    public void GetWeaponStats(weaponStats weapon)
-    {
-        weapons.Add(weapon);
-
-        shootDamage = weapon.itemDamage;
-        shootDist = weapon.itemDistance;
-        shootRate = weapon.shootRate;
-
-        weaponModel.GetComponent<MeshFilter>().sharedMesh = weapon.itemModel.GetComponent<MeshFilter>().sharedMesh;
-        weaponModel.GetComponent<MeshRenderer>().sharedMaterial = weapon.itemModel.GetComponent<MeshRenderer>().sharedMaterial;
-    }
     public void UpdatePlayerUI()
     {
         gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
@@ -245,9 +239,9 @@ public class PlayerController : MonoBehaviour, IDamage
             gameManager.instance.ammoCur.text = weapons[selectedGun].ammoCur.ToString("F0");
             gameManager.instance.ammoMax.text = weapons[selectedGun].ammoMax.ToString("F0");
         }
-       
-    }
 
+    }
+    
     public void GetGunStats(weaponStats gun)
 
     {
@@ -274,7 +268,7 @@ public class PlayerController : MonoBehaviour, IDamage
         }
         else if (Input.GetAxis("Mouse ScrollWheel") < 0 && selectedGun > 0)
         {
-            selectedGun++;
+            selectedGun--;
             ChangeGun();
         }
 
@@ -286,14 +280,13 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         UpdatePlayerUI();
 
-        weaponStats gun = weapons[selectedGun];
-        shootDamage = gun.itemDamage;
-        shootDist = gun.itemDistance;
-        shootRate = gun.shootRate;
+        shootDamage = weapons[selectedGun].itemDamage;
+        shootDist = weapons[selectedGun].itemDistance;
+        shootRate= weapons[selectedGun].shootRate;
 
 
-        weaponModel.GetComponent<MeshFilter>().sharedMesh = gun.itemModel.GetComponent<MeshFilter>().sharedMesh;
-        weaponModel.GetComponent<MeshRenderer>().sharedMaterial = gun.itemModel.GetComponent<MeshRenderer>().sharedMaterial;
+        weaponModel.GetComponent<MeshFilter>().sharedMesh = weapons[selectedGun].itemModel.GetComponent<MeshFilter>().sharedMesh;
+        weaponModel.GetComponent<MeshRenderer>().sharedMaterial = weapons[selectedGun].itemModel.GetComponent<MeshRenderer>().sharedMaterial;
 
     }
 
