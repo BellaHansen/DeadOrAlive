@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58958bf6d007ed048a49c374039e2985, type: 3}
   m_Name: AR
   m_EditorClassIdentifier: 
-  weaponModel: {fileID: 0}
-  shootdamage: 1
-  shootDist: 100
+  itemModel: {fileID: 919132149155446097, guid: 33269b2b610f4c245a712795c1927939, type: 3}
+  itemDamage: 15
+  itemDistance: 30
   shootRate: 0.2
   ammoCur: 100
   ammoMax: 100
+  hitEffect: {fileID: 0}
+  shootSound: {fileID: 8300000, guid: b3609ff2243c71c46bc60267579ce5fa, type: 3}
+  shootVol: 0
