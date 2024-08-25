@@ -41,8 +41,6 @@ public class gameManager : MonoBehaviour
     //Variable for wave count text
     [SerializeField] TMP_Text waveCountText;
 
-    [SerializeField] TMP_Text levelCountText;
-
     //Variable for ammo current and max
     public TMP_Text ammoCur, ammoMax;
 
@@ -161,8 +159,6 @@ public class gameManager : MonoBehaviour
            
                 // Update wave count display
             waveCountText.text = waveManager.instance.currentWave.ToString("F0");
-
-        levelCountText.text = waveManager.instance.currentWave.ToString("F0");
 
             // Check win condition
             if (zombieCount <= 0 && waveManager.instance.currentWave >= waveManager.instance.spawners.Length)
