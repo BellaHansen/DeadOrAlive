@@ -162,7 +162,7 @@ public class gameManager : MonoBehaviour
                 // Update wave count display
             waveCountText.text = waveManager.instance.currentWave.ToString("F0");
 
-        levelCountText.text = waveManager.instance.currentWave.ToString("F0");
+            levelCountText.text = waveManager.instance.currentWave.ToString("F0");
 
             // Check win condition
             if (zombieCount <= 0 && waveManager.instance.currentWave >= waveManager.instance.spawners.Length)
