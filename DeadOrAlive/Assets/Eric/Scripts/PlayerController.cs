@@ -13,15 +13,16 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] GameObject bullet;
     [SerializeField] List<weaponStats> weapons = new List<weaponStats>();
     [SerializeField] GameObject weaponModel;
+    [SerializeField] AudioSource aud;
 
 
     int selectedGun;
 
     [SerializeField] Animator anim;
-    
 
-
-
+    [SerializeField] AudioClip[] audWalk;
+    [SerializeField] AudioClip[] audHurt;
+    [SerializeField] AudioClip[] audShoot;
     [SerializeField] int origSpeed;
     [SerializeField] int sprintMod;
     [SerializeField] int jumpsMax;
@@ -107,12 +108,13 @@ public class PlayerController : MonoBehaviour, IDamage
         controller.Move(playerVel * Time.deltaTime);
         playerVel.y -= gravity * Time.deltaTime; // based on time not on frames
 
+        //aud.PlayOneShot(audWalk[Random.Range(0, audWalk.Length)]);
+
         //shoot mechanic
         if (Input.GetButton("Fire1") && !isShooting)
         {
             StartCoroutine(shoot());
         }
-        anim.SetFloat("speed", speed);
     }
 
     void sprint()
@@ -120,16 +122,21 @@ public class PlayerController : MonoBehaviour, IDamage
         if (Input.GetButtonDown("Sprint"))
         {
             origSpeed *= sprintMod;
+            anim.SetFloat("Speed", 1);
 
         }
         else if (Input.GetButtonUp("Sprint"))
         {
             origSpeed /= sprintMod;
+            anim.SetFloat("Speed", 0);
         }
     }
 
     IEnumerator shoot()
     {
+        if (weapons[selectedGun] == null)
+            yield break;
+
         isShooting = true;
 
         anim.SetTrigger("Shoot");
@@ -138,17 +145,17 @@ public class PlayerController : MonoBehaviour, IDamage
 
         UpdatePlayerUI();
 
+        aud.PlayOneShot(audShoot[Random.Range(0, audShoot.Length)]);
+
         RaycastHit hit;     // origin: camera position, dir: where cam is looking, out: to know what we hit, distance
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignoreMask))
         {
-            Debug.Log(hit.collider.name); // will return what gets hit
 
             IDamage dmg = hit.collider.GetComponent<IDamage>();
 
             if (hit.transform != transform)
             {
                 dmg.TakeDamage(shootDamage);
-                //Instantiate(cube, hit.point, transform.rotation);
             }
             else
             {
@@ -169,8 +176,10 @@ public class PlayerController : MonoBehaviour, IDamage
     public void TakeDamage(int amount)
     {
         isBeingDamaged = true;
+        anim.SetTrigger("Hit");
         HP -= amount;
         UpdatePlayerUI();
+        aud.PlayOneShot(audHurt[Random.Range(0, audHurt.Length)]);
         StartCoroutine(FlashDamage());
         if (HP <= 0)
         {
@@ -289,39 +298,4 @@ public class PlayerController : MonoBehaviour, IDamage
         weaponModel.GetComponent<MeshRenderer>().sharedMaterial = weapons[selectedGun].itemModel.GetComponent<MeshRenderer>().sharedMaterial;
 
     }
-
-
-
-
-    //    void SelectGun()
-    //    {
-    //        if (Input.GetAxis("Mouse ScrollWheel") > 0 && selectedGun < weapons.Count - 1)
-    //        {
-    //            ++selectedGun;
-    //            ChangeGun();
-    //        }
-    //        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && selectedGun > 0)
-    //        {
-    //            --selectedGun;
-    //            ChangeGun();
-    //        }
-
-
-
-    //    }
-
-    //    void ChangeGun()
-    //    {
-    //        UpdatePlayerUI();
-
-    //        WeaponStats gun = weapons[selectedGun];
-    //        shootDamage = gun.itemDamage;
-    //        shootDist = gun.itemRange;
-    //        shootRate = gun.shootRate;
-
-    //        weaponModel.GetComponent<MeshFilter>().sharedMesh = gun.itemModel.GetComponent<MeshFilter>().sharedMesh;
-    //        weaponModel.GetComponent<MeshRenderer>().sharedMaterial = gun.itemModel.GetComponent<MeshRenderer>().sharedMaterial;
-
-    //    }
-
 }
