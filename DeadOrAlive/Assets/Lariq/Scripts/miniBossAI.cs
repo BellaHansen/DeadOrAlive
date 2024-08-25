@@ -51,6 +51,7 @@ public class miniBossAI : MonoBehaviour
 
     void Update()
     {
+       
         Debug.DrawRay(attackPos.transform.position, attackPos.transform.forward * 3, Color.green);
         float agentSpeed = agent.velocity.normalized.magnitude;
         anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentSpeed, Time.deltaTime * animSpeed));

@@ -12,6 +12,8 @@ public class weaponStats : ScriptableObject
     [SerializeField] public int ammoCur;
     [SerializeField] public int ammoMax;
     [SerializeField] public ParticleSystem hitEffect;
+    [SerializeField] public AudioSource gunAud;
     [SerializeField] public AudioClip shootSound;
+    [SerializeField] public AudioClip gunHit;
     [SerializeField] public float shootVol;
 }
