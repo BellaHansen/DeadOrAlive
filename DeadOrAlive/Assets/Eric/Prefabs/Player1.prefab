@@ -646,25 +646,25 @@ MonoBehaviour:
   weaponModel: {fileID: 0}
   aud: {fileID: 0}
   anim: {fileID: 7186228568364399329}
-  origSpeed: 2
+  origSpeed: 8
   sprintMod: 4
   jumpsMax: 2
   jumpSpeed: 6
   gravity: 15
-  shootDamage: 0
-  shootDist: 0
+  shootDamage: 2
+  shootDist: 15
   animSpeedTrans: 10
   audMoveVol: 0
   audMove: []
-  shootRate: 0
-  HP: 0
+  shootRate: 0.5
+  HP: 30
   currentLeanState: 0
   inventoryItems: []
   isleaning: 0
   isShooting: 0
   isBeingDamaged: 0
   jumpCount: 0
-  HPOrig: 0
+  HPOrig: 30
 --- !u!95 &7186228568364399329
 Animator:
   serializedVersion: 5
