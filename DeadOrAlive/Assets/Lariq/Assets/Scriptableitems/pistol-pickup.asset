@@ -20,6 +20,6 @@ MonoBehaviour:
   ammoMax: 0
   hitEffect: {fileID: 0}
   gunAud: {fileID: 0}
-  shootSound: {fileID: 0}
+  shootSound: {fileID: 8300000, guid: 64f88c9919e425c42a3391e28cc1a070, type: 3}
   gunHit: {fileID: 0}
   shootVol: 0
