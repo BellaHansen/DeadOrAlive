@@ -14,9 +14,6 @@ public class waveManager : MonoBehaviour
     [SerializeField] int timeBetweenWaves;
 
     public int currentWave;
-    [SerializeField] GameObject bossModel;
-
-    [SerializeField] GameObject finelBossModel;
 
 
 
@@ -40,16 +37,6 @@ public class waveManager : MonoBehaviour
 
             // Start spawning zombies using the appropriate spawner
             spawners[currentWave - 1].StartWave();
-
-            //spawn zombie boss after every two waves
-            if (currentWave % 2 ==0)
-            {
-                Instantiate(bossModel, spawners[currentWave - 1].transform);
-            }
-            else if (currentWave==15)
-            {
-                Instantiate(finelBossModel, spawners[currentWave - 1].transform);
-            }
         }
         
     }

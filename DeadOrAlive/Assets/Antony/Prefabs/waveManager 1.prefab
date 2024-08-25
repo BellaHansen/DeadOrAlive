@@ -46,7 +46,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawners:
   - {fileID: 0}
-  timeBetweenWaves: 180
+  timeBetweenWaves: 5
   currentWave: 0
-  bossModel: {fileID: 6499803645710217879, guid: 3a1a3cee967c9ad4591bc3aaefcc3a24, type: 3}
-  finelBossModel: {fileID: 0}
