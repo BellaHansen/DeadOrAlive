@@ -5,7 +5,6 @@ using Unity.VisualScripting;
 using UnityEditor;
 
 using UnityEngine;
-using UnityEngine.Animations;
 
 public class PlayerController : MonoBehaviour, IDamage
 {
@@ -14,13 +13,13 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] GameObject bullet;
     [SerializeField] List<weaponStats> weapons = new List<weaponStats>();
     [SerializeField] GameObject weaponModel;
-    [SerializeField] AudioSource aud;
 
 
     int selectedGun;
 
-
     [SerializeField] Animator anim;
+    
+
 
 
     [SerializeField] int origSpeed;
@@ -31,8 +30,6 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] int shootDamage;
     [SerializeField] int shootDist;
     [SerializeField] int animSpeedTrans;
-    [SerializeField] float audMoveVol;
-    [SerializeField] AudioClip[] audMove;
 
 
     [SerializeField] float shootRate;
@@ -40,10 +37,9 @@ public class PlayerController : MonoBehaviour, IDamage
 
     Vector3 moveDir;
     Vector3 playerVel;
-    
-
     public enum LeanState { None, Left, Right };
     public LeanState currentLeanState;
+
 
 
     public List<weaponStats> inventoryItems;
@@ -51,19 +47,18 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public bool isleaning;
     public bool isShooting;
-    public bool isBeingDamaged;
 
+    public bool isBeingDamaged;
 
     public int jumpCount;
     public int HPOrig;
-    bool isMoving;
-    bool isCrouched;
+    public int speed;
 
     // Start is called before the first frame update
     void Start()
     {
         HPOrig = HP;
-        
+
         SpawnPlayer();
     }
 
@@ -75,7 +70,7 @@ public class PlayerController : MonoBehaviour, IDamage
         //If the game is not paused
         if (!gameManager.instance.isPaused)
         {
-                movement();
+            movement();
         }
         sprint();
 
@@ -92,6 +87,7 @@ public class PlayerController : MonoBehaviour, IDamage
     }
     void movement()
     {
+        speed = origSpeed;
         if (controller.isGrounded)
         {
             jumpCount = 0;  // reset jumps to jump again
@@ -101,7 +97,7 @@ public class PlayerController : MonoBehaviour, IDamage
         moveDir = Input.GetAxis("Vertical") * transform.forward +
                   Input.GetAxis("Horizontal") * transform.right;
 
-        controller.Move(moveDir * origSpeed * Time.deltaTime);
+        controller.Move(moveDir * speed * Time.deltaTime);
         if (Input.GetButtonDown("Jump") && jumpCount < jumpsMax)
         {
             jumpCount++;
@@ -116,23 +112,8 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             StartCoroutine(shoot());
         }
-        PlayerCrouch();
-        if (isCrouched)
-        {
-            anim.SetBool("Crouching", true);
-        }
-        else
-        {
-            anim.SetBool("Crouching", false);
-        }
-        if(Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            AimPlayer();
-        }
-
+        anim.SetFloat("speed", speed);
     }
-
- 
 
     void sprint()
     {
@@ -209,29 +190,6 @@ public class PlayerController : MonoBehaviour, IDamage
         gameManager.instance.damageFlashScreen.SetActive(false);
     }
 
-    void PlayerCrouch()
-    {
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            if (!isCrouched)
-            {
-                anim.SetTrigger("Crouch");
-                isCrouched = true;
-            }
-            else
-            {
-                anim.SetTrigger("Uncrouch");
-                isCrouched = false;
-            }
-        }
-
-    }
-
-    void AimPlayer()
-    {
-        anim.SetBool("aim", true);
-    }
-
     public bool IsLeaning()
     {
         if (currentLeanState == LeanState.None)
@@ -305,12 +263,12 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         if (Input.GetAxis("Mouse ScrollWheel") > 0 && selectedGun < weapons.Count - 1)
         {
-            ++selectedGun;
+            selectedGun++;
             ChangeGun();
         }
         else if (Input.GetAxis("Mouse ScrollWheel") < 0 && selectedGun > 0)
         {
-            --selectedGun;
+            selectedGun--;
             ChangeGun();
         }
 
@@ -326,9 +284,44 @@ public class PlayerController : MonoBehaviour, IDamage
         shootDist = weapons[selectedGun].itemDistance;
         shootRate= weapons[selectedGun].shootRate;
 
-        weaponModel.GetComponent<MeshFilter>().sharedMesh = weapons[selectedGun].GetComponent<MeshFilter>().sharedMesh;
-        weaponModel.GetComponent<MeshRenderer>().sharedMaterial = weapons[selectedGun].GetComponent<MeshRenderer>().sharedMaterial;
+
+        weaponModel.GetComponent<MeshFilter>().sharedMesh = weapons[selectedGun].itemModel.GetComponent<MeshFilter>().sharedMesh;
+        weaponModel.GetComponent<MeshRenderer>().sharedMaterial = weapons[selectedGun].itemModel.GetComponent<MeshRenderer>().sharedMaterial;
 
     }
+
+
+
+
+    //    void SelectGun()
+    //    {
+    //        if (Input.GetAxis("Mouse ScrollWheel") > 0 && selectedGun < weapons.Count - 1)
+    //        {
+    //            ++selectedGun;
+    //            ChangeGun();
+    //        }
+    //        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && selectedGun > 0)
+    //        {
+    //            --selectedGun;
+    //            ChangeGun();
+    //        }
+
+
+
+    //    }
+
+    //    void ChangeGun()
+    //    {
+    //        UpdatePlayerUI();
+
+    //        WeaponStats gun = weapons[selectedGun];
+    //        shootDamage = gun.itemDamage;
+    //        shootDist = gun.itemRange;
+    //        shootRate = gun.shootRate;
+
+    //        weaponModel.GetComponent<MeshFilter>().sharedMesh = gun.itemModel.GetComponent<MeshFilter>().sharedMesh;
+    //        weaponModel.GetComponent<MeshRenderer>().sharedMaterial = gun.itemModel.GetComponent<MeshRenderer>().sharedMaterial;
+
+    //    }
 
 }
