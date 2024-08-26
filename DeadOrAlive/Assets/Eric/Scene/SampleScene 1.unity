@@ -14216,7 +14216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e98ef79025980d5489599170d354e674, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponMountPoint: {fileID: 1404948688}
+  weaponMountPoint: {fileID: 3599821823235874973}
 --- !u!1 &1478077921
 GameObject:
   m_ObjectHideFlags: 0
@@ -21395,7 +21395,7 @@ MonoBehaviour:
   menuPause: {fileID: 6870573930300569015}
   menuWin: {fileID: 6213758715591380509}
   menuLose: {fileID: 3769459055637708378}
-  inventoryMenu: {fileID: 0}
+  inventoryMenu: {fileID: 2078917984862180739}
   playerHPBar: {fileID: 806897213172934343}
   damageFlashScreen: {fileID: 5367493795292550204}
   zombieCountText: {fileID: 940030057664783521}
@@ -24156,7 +24156,7 @@ Transform:
   m_GameObject: {fileID: 5854449177113840610}
   serializedVersion: 2
   m_LocalRotation: {x: -3.3920896e-27, y: 1.4692705e-14, z: 2.3086895e-13, w: 1}
-  m_LocalPosition: {x: -4.1474883e-12, y: 0.16865322, z: 5.7686385e-16}
+  m_LocalPosition: {x: 0, y: 0.16865322, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -28299,7 +28299,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   bullet: {fileID: 6256149530732036419}
-  weapons: []
+  weapons:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   weaponModel: {fileID: 0}
   aud: {fileID: 1988590354}
   anim: {fileID: 7645209751154574285}
@@ -28317,7 +28321,11 @@ MonoBehaviour:
   shootRate: 0.06
   HP: 15
   currentLeanState: 0
-  inventoryItems: []
+  inventoryItems:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   isleaning: 0
   isShooting: 0
   isBeingDamaged: 0
