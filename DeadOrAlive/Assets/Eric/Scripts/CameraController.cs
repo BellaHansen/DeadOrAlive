@@ -50,15 +50,13 @@ public class CameraController : MonoBehaviour
 
     void LeanCamera()
     {
-        if (gameManager.instance.playerScript.IsLeaning() && gameManager.instance.playerScript.currentLeanState != PlayerController.LeanState.Right)
+        if (gameManager.instance.playerScript.IsLeaning() && gameManager.instance.playerScript.currentLeanState == PlayerController.LeanState.Right)
         {
             transform.localRotation = Quaternion.Euler(rotX, Input.GetAxis("Mouse Y"), transform.rotation.z - 45);
-            gameManager.instance.playerScript.currentLeanState = PlayerController.LeanState.Right;
         }
-        else if (gameManager.instance.playerScript.IsLeaning() && gameManager.instance.playerScript.currentLeanState != PlayerController.LeanState.Left)
+        else if (gameManager.instance.playerScript.IsLeaning() && gameManager.instance.playerScript.currentLeanState == PlayerController.LeanState.Left)
         {
             transform.localRotation = Quaternion.Euler(rotX, Input.GetAxis("Mouse Y"), transform.rotation.z + 45);
-            gameManager.instance.playerScript.currentLeanState = PlayerController.LeanState.Left;
         }
     }
 }
