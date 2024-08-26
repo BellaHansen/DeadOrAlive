@@ -101,6 +101,7 @@ public class PlayerController : MonoBehaviour, IDamage
         controller.Move(moveDir * speed * Time.deltaTime);
         if (Input.GetButtonDown("Jump") && jumpCount < jumpsMax)
         {
+            anim.SetTrigger("Jump");
             jumpCount++;
             playerVel.y = jumpSpeed;
         }
