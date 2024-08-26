@@ -19,7 +19,7 @@ public class WeaponController : MonoBehaviour
 
         GameObject weaponItem = Instantiate(weapon.itemModel, weaponMountPoint.position, weaponMountPoint.rotation, weaponMountPoint);
 
-        currentWeapon = weaponItem.GetComponent<weaponStats>();
+        
 
         maxAmmo = currentWeapon.ammoMax;
         currentAmmo = currentWeapon.ammoCur;

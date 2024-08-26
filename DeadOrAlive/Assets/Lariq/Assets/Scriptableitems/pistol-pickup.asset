@@ -12,14 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58958bf6d007ed048a49c374039e2985, type: 3}
   m_Name: pistol-pickup
   m_EditorClassIdentifier: 
-  itemModel: {fileID: 0}
-  itemDamage: 0
-  itemDistance: 0
-  shootRate: 0
+  itemModel: {fileID: 386164790876164519, guid: dd53cfaed2427944aa96cf82fd53fa80, type: 3}
+  itemDamage: 15
+  itemDistance: 20
+  shootRate: 1
   ammoCur: 0
-  ammoMax: 0
+  ammoMax: 1000
   hitEffect: {fileID: 0}
-  gunAud: {fileID: 0}
   shootSound: {fileID: 8300000, guid: 64f88c9919e425c42a3391e28cc1a070, type: 3}
-  gunHit: {fileID: 0}
-  shootVol: 0
+  shootVol: 4

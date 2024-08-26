@@ -110,7 +110,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -7.399994}
+  m_AnchoredPosition: {x: 0, y: -7.4000244}
   m_SizeDelta: {x: 300, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1169837606907432230
@@ -553,7 +553,6 @@ GameObject:
   - component: {fileID: 3528666679291119577}
   - component: {fileID: 3880739773135772189}
   - component: {fileID: 5281596133771272204}
-  - component: {fileID: 5206537563450068843}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -600,6 +599,7 @@ MonoBehaviour:
   bullet: {fileID: 7406194716143099642}
   weapons: []
   weaponModel: {fileID: 0}
+  aud: {fileID: 0}
   anim: {fileID: 0}
   origSpeed: 8
   sprintMod: 2
@@ -609,6 +609,8 @@ MonoBehaviour:
   shootDamage: 48
   shootDist: 300
   animSpeedTrans: 0
+  audMoveVol: 0
+  audMove: []
   shootRate: 0.06
   HP: 120
   currentLeanState: 0
@@ -618,7 +620,6 @@ MonoBehaviour:
   isBeingDamaged: 0
   jumpCount: 0
   HPOrig: 0
-  speed: 0
 --- !u!143 &1608293763606945208
 CharacterController:
   m_ObjectHideFlags: 0
@@ -718,19 +719,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5206537563450068843
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8338917085396818415}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e98ef79025980d5489599170d354e674, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponMountPoint: {fileID: 153782098592299058}
 --- !u!1 &8553073056615615459
 GameObject:
   m_ObjectHideFlags: 0
