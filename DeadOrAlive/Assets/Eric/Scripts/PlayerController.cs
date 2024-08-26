@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour, IDamage
     public LeanState currentLeanState;
 
 
-    public List<weaponStats> inventoryItems;
+    
 
 
     public bool isleaning;
@@ -171,7 +171,7 @@ public class PlayerController : MonoBehaviour, IDamage
             }
             else
             {
-                Instantiate(weapons[selectedGun].hitEffect, hit.point, Quaternion.identity);
+                Instantiate(bullet, hit.point, Quaternion.identity);
             }
         }
 
