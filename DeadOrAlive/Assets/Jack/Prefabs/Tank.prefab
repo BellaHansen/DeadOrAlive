@@ -1662,7 +1662,7 @@ CapsuleCollider:
   m_Radius: 0.5
   m_Height: 2.26353
   m_Direction: 1
-  m_Center: {x: 0, y: 1.044456, z: 0}
+  m_Center: {x: 0, y: 1.25, z: 0}
 --- !u!135 &254917254224107019
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1682,8 +1682,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 10
-  m_Center: {x: 0, y: 1.1, z: 0}
+  m_Radius: 15
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!82 &6262925911418415771
 AudioSource:
   m_ObjectHideFlags: 0
