@@ -90,4 +90,9 @@ public class buttonFunctions : MonoBehaviour
         gameManager.instance.playerScript.SpawnPlayer();
         gameManager.instance.stateUnpause();
     }
+
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene("mainmenu");
+    }
 }
