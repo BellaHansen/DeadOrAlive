@@ -22,7 +22,7 @@ public class newSpitterAI : MonoBehaviour, IDamage
     [SerializeField] int roamDist;
     [SerializeField] int roamTimer;
 
-    [SerializeField] int attackRate;
+    [SerializeField] float attackRate;
     [SerializeField] AudioClip[] audRoam;
     [SerializeField] float audRoamVol;
 
@@ -62,14 +62,14 @@ public class newSpitterAI : MonoBehaviour, IDamage
         anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentSpeed, Time.deltaTime * animSpeed));
         if (playerInRange && !canSeePlayer())
         {
-            if (!isRoaming && agent.remainingDistance < 0.06f)
+            if (!isRoaming && agent.remainingDistance < 0.05f)
             {
                 StartCoroutine(roam());
             }
         }
         else if (!playerInRange)
         {
-            if (!isRoaming && agent.remainingDistance < 0.06f)
+            if (!isRoaming && agent.remainingDistance < 0.05f)
             {
                 StartCoroutine(roam());
             }
@@ -80,7 +80,7 @@ public class newSpitterAI : MonoBehaviour, IDamage
         isRoaming = true;
         yield return new WaitForSeconds(roamTimer);
 
-        agent.stoppingDistance = 0;
+        agent.stoppingDistance = 0.5f;
         Vector3 randomPos = Random.insideUnitSphere * roamDist;
         randomPos += startingPos;
 
@@ -119,7 +119,7 @@ public class newSpitterAI : MonoBehaviour, IDamage
                 return true;
             }
         }
-        agent.stoppingDistance = 0f;
+        agent.stoppingDistance = 0.5f;
         return false;
     }
     void OnTriggerEnter(Collider other)

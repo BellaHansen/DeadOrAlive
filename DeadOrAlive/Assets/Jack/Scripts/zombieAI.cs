@@ -24,7 +24,7 @@ public class zombieAI : MonoBehaviour, IDamage
     [SerializeField] int attackDamage;
     [SerializeField] float attackRange = 2.0f;
 
-    [SerializeField] int attackRate;
+    [SerializeField] float attackRate;
 
     [SerializeField] AudioClip[] audHurt;
     [SerializeField] float audHurtVol;
@@ -62,7 +62,7 @@ public class zombieAI : MonoBehaviour, IDamage
 
     void Update()
     {
-        Debug.DrawRay(attackPos.transform.position, attackPos.transform.forward * 3, Color.green);
+        //Debug.DrawRay(attackPos.transform.position, attackPos.transform.forward * 3, Color.green);
         float agentSpeed = agent.velocity.normalized.magnitude;
         anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentSpeed, Time.deltaTime * animSpeed));
         if (playerInRange && !canSeePlayer())
@@ -85,7 +85,7 @@ public class zombieAI : MonoBehaviour, IDamage
         isRoaming = true;
         yield return new WaitForSeconds(roamTimer);
 
-        agent.stoppingDistance = 0.1f;
+        agent.stoppingDistance = 0.5f;
         Vector3 randomPos = Random.insideUnitSphere * roamDist;
         randomPos += startingPos;
 
@@ -124,7 +124,7 @@ public class zombieAI : MonoBehaviour, IDamage
                 return true;
             }
         }
-        agent.stoppingDistance = 0;
+        agent.stoppingDistance = 0.5f;
         return false;
     }
     void OnTriggerEnter(Collider other)
