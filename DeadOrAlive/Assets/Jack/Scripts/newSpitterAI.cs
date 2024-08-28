@@ -62,14 +62,14 @@ public class newSpitterAI : MonoBehaviour, IDamage
         anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentSpeed, Time.deltaTime * animSpeed));
         if (playerInRange && !canSeePlayer())
         {
-            if (!isRoaming && agent.remainingDistance < 0.6f)
+            if (!isRoaming && agent.remainingDistance < 0.06f)
             {
                 StartCoroutine(roam());
             }
         }
         else if (!playerInRange)
         {
-            if (!isRoaming && agent.remainingDistance < 0.6f)
+            if (!isRoaming && agent.remainingDistance < 0.06f)
             {
                 StartCoroutine(roam());
             }
@@ -80,7 +80,7 @@ public class newSpitterAI : MonoBehaviour, IDamage
         isRoaming = true;
         yield return new WaitForSeconds(roamTimer);
 
-        agent.stoppingDistance = 0.5f;
+        agent.stoppingDistance = 0;
         Vector3 randomPos = Random.insideUnitSphere * roamDist;
         randomPos += startingPos;
 
@@ -119,7 +119,7 @@ public class newSpitterAI : MonoBehaviour, IDamage
                 return true;
             }
         }
-        agent.stoppingDistance = 0.5f;
+        agent.stoppingDistance = 0f;
         return false;
     }
     void OnTriggerEnter(Collider other)
@@ -147,7 +147,7 @@ public class newSpitterAI : MonoBehaviour, IDamage
     {
         isAttacking = true;
         agent.speed = 0;
-        Instantiate(projectile, attackPos.transform.position, attackPos.transform.rotation);
+       Instantiate(projectile, attackPos.position, transform.rotation);
         anim.SetTrigger("Attack");
 
         aud.PlayOneShot(audAttack[Random.Range(0, audAttack.Length)], audAttackVol);

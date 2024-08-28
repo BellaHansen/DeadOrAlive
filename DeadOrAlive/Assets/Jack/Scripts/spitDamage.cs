@@ -22,8 +22,8 @@ public class damage : MonoBehaviour
     {
         if (type == damageType.bullet)
         {
-            float dist = spitterPrefab.GetComponent<NavMeshAgent>().stoppingDistance / Vector3.Distance(rb.position, gameManager.instance.player.transform.position);
-            rb.velocity = transform.forward * speed / dist;
+            Vector3 direction = (gameManager.instance.player.transform.position - transform.position).normalized;
+            rb.velocity = direction * speed;
             Destroy(gameObject, destroyTime);
         }
     }
@@ -33,12 +33,13 @@ public class damage : MonoBehaviour
         {
             return;
         }
-        IDamage dmg = other.GetComponent<IDamage>();
+            IDamage dmg = other.GetComponent<IDamage>();
 
-        if (dmg != null && !hasDamaged)
-        {
-            dmg.TakeDamage(damageAmount);
-        }
+            if (dmg != null && !hasDamaged)
+            {
+                dmg.TakeDamage(damageAmount);
+            hasDamaged = true;
+            }
 
         if (other.tag == "Floor")
         {
