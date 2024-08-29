@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Audio;
+using TMPro;
 
 public class buttonFunctions : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class buttonFunctions : MonoBehaviour
     
     List<string> resOption = new List<string>();
     //keep in game manager
-    [SerializeField] Dropdown resolutionDrop; 
+    [SerializeField] TMP_Dropdown resolutionDrop; 
     public void setVolume(float vol)
     {
         aud.SetFloat("volume", vol);
