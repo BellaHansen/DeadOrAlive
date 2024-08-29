@@ -1480,11 +1480,11 @@ NavMeshAgent:
   m_GameObject: {fileID: 6896616681129559483}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 1.5
+  m_Radius: 2
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 720
+  m_AngularSpeed: 600
   m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
@@ -1519,11 +1519,11 @@ MonoBehaviour:
   faceTargetSpeed: 10
   animSpeed: 5
   viewAngle: 90
-  roamDist: 10
-  roamTimer: 10
+  roamDist: 20
+  roamTimer: 3
   attackDamage: 1
   attackRange: 2
-  attackRate: 0
+  attackRate: 0.5
   audHurt:
   - {fileID: 8300000, guid: bdb798b20d5ac2f438f3a562f4150019, type: 3}
   - {fileID: 8300000, guid: 0547b940dba4d964e9e447af1dc0759a, type: 3}
@@ -1565,7 +1565,7 @@ CapsuleCollider:
   m_Radius: 0.5
   m_Height: 2.26353
   m_Direction: 1
-  m_Center: {x: 0, y: 1.044456, z: 0}
+  m_Center: {x: 0, y: 1.25, z: 0}
 --- !u!135 &6368782624806090557
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1585,8 +1585,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 10
-  m_Center: {x: 0, y: 1.1, z: 0}
+  m_Radius: 15
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!82 &2819588723322409577
 AudioSource:
   m_ObjectHideFlags: 0

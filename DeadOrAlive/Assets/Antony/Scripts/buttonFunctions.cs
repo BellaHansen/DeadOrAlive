@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Audio;
+using TMPro;
 
 public class buttonFunctions : MonoBehaviour
 {
@@ -89,5 +90,10 @@ public class buttonFunctions : MonoBehaviour
     {
         gameManager.instance.playerScript.SpawnPlayer();
         gameManager.instance.stateUnpause();
+    }
+
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene("mainmenu");
     }
 }

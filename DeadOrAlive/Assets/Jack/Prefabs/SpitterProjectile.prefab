@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 264974335344414700}
   - component: {fileID: 1799137672625150775}
   - component: {fileID: 4475331481228593541}
-  - component: {fileID: 8106487927323093781}
   m_Layer: 6
   m_Name: SpitterProjectile
   m_TagString: Untagged
@@ -107,7 +106,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.7
+  m_Radius: 0.1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &264974335344414700
 Rigidbody:
@@ -131,7 +130,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -268,24 +267,3 @@ MonoBehaviour:
   destroyTime: 5
   acidPool: {fileID: 7503547527830830783, guid: 3f122fe41d48518489c29dbac72f0fcd, type: 3}
   spitterPrefab: {fileID: 6987774089904356204, guid: fe67f066efeaf4046b050e93dd5abc9d, type: 3}
---- !u!135 &8106487927323093781
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7884130824215752034}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}

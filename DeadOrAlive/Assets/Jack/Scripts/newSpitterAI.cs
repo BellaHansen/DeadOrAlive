@@ -22,7 +22,7 @@ public class newSpitterAI : MonoBehaviour, IDamage
     [SerializeField] int roamDist;
     [SerializeField] int roamTimer;
 
-    [SerializeField] int attackRate;
+    [SerializeField] float attackRate;
     [SerializeField] AudioClip[] audRoam;
     [SerializeField] float audRoamVol;
 
@@ -62,14 +62,14 @@ public class newSpitterAI : MonoBehaviour, IDamage
         anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentSpeed, Time.deltaTime * animSpeed));
         if (playerInRange && !canSeePlayer())
         {
-            if (!isRoaming && agent.remainingDistance < 0.6f)
+            if (!isRoaming && agent.remainingDistance < 0.05f)
             {
                 StartCoroutine(roam());
             }
         }
         else if (!playerInRange)
         {
-            if (!isRoaming && agent.remainingDistance < 0.6f)
+            if (!isRoaming && agent.remainingDistance < 0.05f)
             {
                 StartCoroutine(roam());
             }
@@ -147,7 +147,7 @@ public class newSpitterAI : MonoBehaviour, IDamage
     {
         isAttacking = true;
         agent.speed = 0;
-        Instantiate(projectile, attackPos.transform.position, attackPos.transform.rotation);
+       Instantiate(projectile, attackPos.position, transform.rotation);
         anim.SetTrigger("Attack");
 
         aud.PlayOneShot(audAttack[Random.Range(0, audAttack.Length)], audAttackVol);
