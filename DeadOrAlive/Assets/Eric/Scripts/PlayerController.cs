@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour, IDamage
 {
     [SerializeField] CharacterController controller;
     [SerializeField] LayerMask ignoreMask;
+    [SerializeField] GameObject attackPos;
     [SerializeField] GameObject bullet;
     [SerializeField] List<weaponStats> weapons = new List<weaponStats>();
     [SerializeField] GameObject weaponModel;
