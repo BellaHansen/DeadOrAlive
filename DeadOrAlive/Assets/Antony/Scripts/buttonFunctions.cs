@@ -96,4 +96,8 @@ public class buttonFunctions : MonoBehaviour
     {
         SceneManager.LoadScene("mainmenu");
     }
+    public void GameOptions()
+    {
+        gameManager.instance.camera.sensitivty = 
+    }
 }

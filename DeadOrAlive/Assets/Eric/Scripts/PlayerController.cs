@@ -38,18 +38,11 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] float shootRate;
     [SerializeField] int HP;
 
+
     Vector3 moveDir;
     Vector3 playerVel;
     
 
-    public enum LeanState { None, Left, Right };
-    public LeanState currentLeanState;
-
-
-    
-
-
-    public bool isleaning;
     public bool isShooting;
     public bool isBeingDamaged;
 
@@ -83,7 +76,6 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public void SpawnPlayer()
     {
-        currentLeanState = LeanState.None;
         HP = HPOrig;
         UpdatePlayerUI();
         controller.enabled = false;
@@ -234,47 +226,7 @@ public class PlayerController : MonoBehaviour, IDamage
         anim.SetBool("aim", true);
     }
 
-    public bool IsLeaning()
-    {
-        if (currentLeanState == LeanState.None)
-        {
-            if (Input.GetButtonDown("leanL"))
-            {
-                currentLeanState = LeanState.Left;
-                isleaning = true;
-            }
-            else if (Input.GetButtonDown("leanR"))
-            {
-                currentLeanState = LeanState.Right;
-                isleaning = true;
-            }
-        }
-        else if (currentLeanState == LeanState.Left)
-        {
-            if (Input.GetButtonDown("leanL"))
-            {
-                currentLeanState = LeanState.None;
-                isleaning = false;
-            }
-            else if (Input.GetButtonDown("leanR"))
-            {
-                currentLeanState = LeanState.Right;
-            }
-        }
-        else if (currentLeanState == LeanState.Right)
-        {
-            if (Input.GetButtonDown("leanR"))
-            {
-                currentLeanState = LeanState.None;
-                isleaning = false;
-            }
-            else if (Input.GetButtonDown("leanL"))
-            {
-                currentLeanState = LeanState.Left;
-            }
-        }
-        return isleaning;
-    }
+
     public void UpdatePlayerUI()
     {
         gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;

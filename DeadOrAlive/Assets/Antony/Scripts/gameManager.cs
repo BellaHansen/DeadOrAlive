@@ -49,6 +49,9 @@ public class gameManager : MonoBehaviour
     //Variable for player
     public GameObject player;
 
+    //Variable for the main camera
+    public CameraController camera;
+
     //Variable for player script
     public PlayerController playerScript;
 

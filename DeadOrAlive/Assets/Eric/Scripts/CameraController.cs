@@ -6,7 +6,7 @@ using static PlayerController;
 public class CameraController : MonoBehaviour
 {
     //camera values for controls
-    [SerializeField] int sensitivty;
+    [SerializeField] public int sensitivty;
     [SerializeField] int lockvertmin, lockvertmax;
     [SerializeField] bool invertY;
 
@@ -44,21 +44,6 @@ public class CameraController : MonoBehaviour
         //rotate the player on the Y-Axis
         transform.parent.Rotate(Vector3.up * mouseX);
 
-        LeanCamera();
-
     }
 
-    void LeanCamera()
-    {
-        if (gameManager.instance.playerScript.IsLeaning() && gameManager.instance.playerScript.currentLeanState != PlayerController.LeanState.Right)
-        {
-            transform.localRotation = Quaternion.Euler(rotX, Input.GetAxis("Mouse Y"), transform.rotation.z - 45);
-            gameManager.instance.playerScript.currentLeanState = PlayerController.LeanState.Right;
-        }
-        else if (gameManager.instance.playerScript.IsLeaning() && gameManager.instance.playerScript.currentLeanState != PlayerController.LeanState.Left)
-        {
-            transform.localRotation = Quaternion.Euler(rotX, Input.GetAxis("Mouse Y"), transform.rotation.z + 45);
-            gameManager.instance.playerScript.currentLeanState = PlayerController.LeanState.Left;
-        }
-    }
 }
