@@ -166,7 +166,7 @@ public class PlayerController : MonoBehaviour, IDamage
             if (hit.transform != transform)
             {
                 dmg.TakeDamage(shootDamage);
-                //Instantiate(cube, hit.point, transform.rotation);
+                Instantiate(bullet, hit.point, transform.rotation);
             }
             else
             {
