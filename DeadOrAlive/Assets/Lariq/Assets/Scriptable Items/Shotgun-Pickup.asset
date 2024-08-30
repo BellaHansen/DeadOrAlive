@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58958bf6d007ed048a49c374039e2985, type: 3}
+  m_Name: Shotgun-Pickup
+  m_EditorClassIdentifier: 
+  itemModel: {fileID: 4011225339377579981, guid: b8c17493916497746a927a4ff3f93429, type: 3}
+  itemDamage: 15
+  itemDistance: 5
+  shootRate: 1
+  ammoCur: 0
+  ammoMax: 15
+  shootSound:
+  - {fileID: 8300000, guid: 3bec4f8ca01479f40b3f65ffac20ac16, type: 3}
+  - {fileID: 8300000, guid: 43fa723ee372b9445837fafc6e3d2592, type: 3}
+  - {fileID: 8300000, guid: bf758cc9065c76a41b4401a104766b08, type: 3}
+  - {fileID: 8300000, guid: 96b12c54a546f0e4d807b364a7ebdfd2, type: 3}
+  - {fileID: 8300000, guid: ddda91fe2259a8a42898dbe6abf097bc, type: 3}
+  shootVol: 0.5

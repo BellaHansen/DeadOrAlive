@@ -9,9 +9,17 @@ public class WeaponController : MonoBehaviour
     private weaponStats currentWeapon;
     private int currentAmmo;
     private int maxAmmo;
+    private int selected;
+    PlayerController playerController;
 
+    public void Start()
+    {
+        playerController = GetComponent<PlayerController>();
+        
+    }
     public void equipWeapon(weaponStats weapon)
     {
+        currentWeapon = weapon;
         if (currentWeapon != null)
         {
             Destroy(currentWeapon.itemModel);

@@ -155,6 +155,8 @@ public class PlayerController : MonoBehaviour, IDamage
 
         weapons[selectedGun].ammoCur--;
 
+        aud.PlayOneShot(weapons[selectedGun].shootSound[Random.Range(0, weapons[selectedGun].shootSound.Length)], weapons[selectedGun].shootVol);
+
         UpdatePlayerUI();
 
         RaycastHit hit;     // origin: camera position, dir: where cam is looking, out: to know what we hit, distance
@@ -278,6 +280,7 @@ public class PlayerController : MonoBehaviour, IDamage
         gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
         if (weapons.Count > 0)
         {
+            
             gameManager.instance.ammoCur.text = weapons[selectedGun].ammoCur.ToString("F0");
             gameManager.instance.ammoMax.text = weapons[selectedGun].ammoMax.ToString("F0");
         }
