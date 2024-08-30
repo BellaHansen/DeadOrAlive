@@ -32,7 +32,7 @@ public class buttonFunctions : MonoBehaviour
     public void Start()
     {
         resolutions = Screen.resolutions;
-        resolutionDrop.ClearOptions();
+        resolutionDrop.ClearOptions(); 
         int currentResIndex = 0;
         for (int i = 0; i < resolutions.Length; i++)
         {
@@ -98,6 +98,6 @@ public class buttonFunctions : MonoBehaviour
     }
     public void GameOptions()
     {
-        gameManager.instance.camera.sensitivty = 
+        
     }
 }

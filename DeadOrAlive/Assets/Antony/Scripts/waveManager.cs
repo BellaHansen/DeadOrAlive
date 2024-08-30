@@ -15,6 +15,10 @@ public class waveManager : MonoBehaviour
 
     public int currentWave;
 
+    [SerializeField] AudioSource aud;
+    [SerializeField] AudioClip audSpawn;
+    [SerializeField] float audSpawnVol;
+
 
 
     private void Awake()
@@ -23,6 +27,7 @@ public class waveManager : MonoBehaviour
         instance = this;
 
         StartCoroutine(StartWave());
+        aud.PlayOneShot(audSpawn, audSpawnVol);
     }
     // Coroutine to start a new wave
     public IEnumerator StartWave()

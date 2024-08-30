@@ -2002,10 +2002,21 @@ MonoBehaviour:
   animSpeedTrans: 10
   audMoveVol: 0
   audMove: []
+  audHurt:
+  - {fileID: 8300000, guid: b51d404011500a048bcb74bee6bc0dc7, type: 3}
+  - {fileID: 8300000, guid: 979e6759a9b0fbe4f9af74bbd55e137b, type: 3}
+  - {fileID: 8300000, guid: 027a478067655d24cb09fdf24f2bef42, type: 3}
+  - {fileID: 8300000, guid: 2ec9e5ace038d0a478c1d229921eb11e, type: 3}
+  - {fileID: 8300000, guid: 043b1f1811aa0194b82de48918f7c0a1, type: 3}
+  - {fileID: 8300000, guid: 1a81c26e387c4bb40a50602dadc0dc8a, type: 3}
+  audHurtVol: 0.25
+  audJump:
+  - {fileID: 8300000, guid: 5b48214bf2fe63b4b847d065f39d0520, type: 3}
+  - {fileID: 8300000, guid: 3f2f387351eafaf41840cfea0b53fc58, type: 3}
+  - {fileID: 8300000, guid: 49337a116b5a0f64e8b01d39b7d094f9, type: 3}
+  audJumpVol: 0.25
   shootRate: 0.5
   HP: 30
-  currentLeanState: 0
-  isleaning: 0
   isShooting: 0
   isBeingDamaged: 0
   jumpCount: 0

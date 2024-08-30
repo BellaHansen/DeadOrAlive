@@ -36,7 +36,7 @@ public class acidPool : MonoBehaviour
         }
         playerInPool = true;
         dmg = other.GetComponent<IDamage>();
-        aud.PlayOneShot(burstEffect);
+        aud.PlayOneShot(burstEffect, burstEffectVol);
     }
 
     void OnTriggerExit()

@@ -33,6 +33,10 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] int animSpeedTrans;
     [SerializeField] float audMoveVol;
     [SerializeField] AudioClip[] audMove;
+    [SerializeField] AudioClip[] audHurt;
+    [SerializeField] float audHurtVol;
+    [SerializeField] AudioClip[] audJump;
+    [SerializeField] float audJumpVol;
 
 
     [SerializeField] float shootRate;
@@ -98,6 +102,7 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             jumpCount++;
             playerVel.y = jumpSpeed;
+            aud.PlayOneShot(audJump[Random.Range(0, audJump.Length)], audJumpVol);
         }
 
         controller.Move(playerVel * Time.deltaTime);
@@ -165,7 +170,7 @@ public class PlayerController : MonoBehaviour, IDamage
             }
             else
             {
-                Instantiate(bullet, hit.point, Quaternion.identity);
+                Instantiate(weaponModel, hit.point, Quaternion.identity);
             }
         }
 
@@ -185,6 +190,8 @@ public class PlayerController : MonoBehaviour, IDamage
         HP -= amount;
         UpdatePlayerUI();
         StartCoroutine(FlashDamage());
+        aud.PlayOneShot(audHurt[Random.Range(0, audHurt.Length)], audHurtVol);
+
         if (HP <= 0)
         {
             gameManager.instance.youLose();
