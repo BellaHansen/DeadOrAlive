@@ -7,6 +7,9 @@ public class acidPool : MonoBehaviour
 {
     [SerializeField] int damageAmount;
     [SerializeField] float timeBetweenDamage;
+    [SerializeField] AudioSource aud;
+    [SerializeField] AudioClip burstEffect;
+    [SerializeField] float burstEffectVol;
    
 
     IDamage dmg;
@@ -33,6 +36,7 @@ public class acidPool : MonoBehaviour
         }
         playerInPool = true;
         dmg = other.GetComponent<IDamage>();
+        aud.PlayOneShot(burstEffect);
     }
 
     void OnTriggerExit()

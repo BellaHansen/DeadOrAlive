@@ -4953,4 +4953,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageAmount: 1
   timeBetweenDamage: 1
-  lingerTime: 5
