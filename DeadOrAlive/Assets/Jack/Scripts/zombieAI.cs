@@ -22,7 +22,7 @@ public class zombieAI : MonoBehaviour, IDamage
     [SerializeField] int roamDist;
     [SerializeField] int roamTimer;
     [SerializeField] int attackDamage;
-    [SerializeField] float attackRange = 2.0f;
+    [SerializeField] float attackRange = 1.5f;
 
     [SerializeField] float attackRate;
 
