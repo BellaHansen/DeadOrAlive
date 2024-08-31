@@ -20,7 +20,7 @@ public class GunSpawn : MonoBehaviour
     private int numSpawned = 0;
 
     // max number of gun that could be spawned
-    private int maxNumToSpawn = 5;
+    private int maxNumToSpawn = 1;
     // Start is called before the first frame update
     void Start()
     {
