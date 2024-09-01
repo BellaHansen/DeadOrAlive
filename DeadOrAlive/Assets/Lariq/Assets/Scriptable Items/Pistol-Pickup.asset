@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Pistol-Pickup
   m_EditorClassIdentifier: 
   itemModel: {fileID: 386164790876164519, guid: dd53cfaed2427944aa96cf82fd53fa80, type: 3}
-  itemDamage: 0
-  itemDistance: 0
-  shootRate: 0
-  ammoCur: 0
-  ammoMax: 0
+  itemDamage: 10
+  itemDistance: 15
+  shootRate: 1
+  ammoCur: 999
+  ammoMax: 999
   shootSound:
   - {fileID: 8300000, guid: 7e0eab754657cda488eaaacdbb96c2e5, type: 3}
   - {fileID: 8300000, guid: 1a9fe62774930e24188f010f62f6bf40, type: 3}

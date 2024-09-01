@@ -46,7 +46,7 @@ public class miniBossAI : MonoBehaviour
         stoppingDistOrig = agent.stoppingDistance;
         speedOrig = agent.speed;
 
-        gameManager.instance.updateGameGoal(1);
+        gameManager.instance.updateGameGoal(+1);
     }
 
     void Update()
@@ -139,7 +139,7 @@ public class miniBossAI : MonoBehaviour
     {
         isAttacking = true;
         agent.speed = 0;
-        anim.SetTrigger("Base Layer");
+        anim.SetTrigger("Attack");
 
         yield return new WaitForSeconds(0.5f);
 
