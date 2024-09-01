@@ -18,6 +18,7 @@ public class waveManager : MonoBehaviour
     [SerializeField] AudioSource aud;
     [SerializeField] AudioClip audSpawn;
     [SerializeField] float audSpawnVol;
+    [SerializeField] GameObject miniBoss;
 
 
 
@@ -42,7 +43,12 @@ public class waveManager : MonoBehaviour
 
             // Start spawning zombies using the appropriate spawner
             spawners[currentWave - 1].StartWave();
+            if (currentWave % 2 == 0)
+            {
+                Instantiate(miniBoss, spawners[0].transform);
+            }
         }
+
         
     }
 
